@@ -20,8 +20,8 @@
 1) When you did code change in your local repo.
 2) You have to do `git add <Name(s) of the file(s) updated>`
 3) Then you have to do `git commit` (Put any comments)
-4) Then you have to do `git push origin/master`
-5) Just create a new pull request and let me know, so I can merge it.
+4) Then you have to do `git push origin/main`
+6) Just create a new pull request and let me know, so I can merge it.
 
 
 ## How to update your forked repo
