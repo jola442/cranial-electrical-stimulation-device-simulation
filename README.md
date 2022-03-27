@@ -35,4 +35,4 @@
 ## How to create new branch
 
 1) Run the command `git branch <name-of-branch>`
-2) Run the command `git checkout <name-of-branch>
+2) Run the command `git checkout <name-of-branch>`
