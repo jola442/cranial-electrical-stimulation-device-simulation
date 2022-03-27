@@ -26,7 +26,7 @@
 
 ## How to update your forked repo
 
-1) Run the command `**git remote add upstream https://github.com/guptamihir418/COMP-3004-Final-Project-Team-30.git**`
+1) Run the command `git remote add upstream https://github.com/guptamihir418/COMP-3004-Final-Project-Team-30.git`
 2) Run the command `git fetch upstream`(Note it might ask for username and password, remember to put your personal access as password
 3) Run the command `git rebase upstream/main`
 
