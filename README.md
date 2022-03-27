@@ -1,5 +1,7 @@
 # COMP-3004-Final-Project
 
+##NOTE: Always create a new branch and work inside it, don't work in main.
+
 ## To clone the repository
 
 1) Fork the repo from github.com/guptamihir418
@@ -30,7 +32,7 @@
 2) Run the command `git fetch upstream`(Note it might ask for username and password, remember to put your personal access as password
 3) Run the command `git rebase upstream/main`
 
+## How to create new branch
 
-
-
-
+1) Run the command `git branch <name-of-branch>`
+2) Run the command `git checkout <name-of-branch>
