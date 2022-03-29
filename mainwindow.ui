@@ -35,7 +35,7 @@
    <widget class="QPushButton" name="powerButton">
     <property name="geometry">
      <rect>
-      <x>520</x>
+      <x>510</x>
       <y>400</y>
       <width>61</width>
       <height>51</height>
@@ -51,7 +51,7 @@
    <widget class="QPushButton" name="upButton">
     <property name="geometry">
      <rect>
-      <x>430</x>
+      <x>410</x>
       <y>330</y>
       <width>61</width>
       <height>51</height>
@@ -68,7 +68,7 @@
    <widget class="QPushButton" name="downButton">
     <property name="geometry">
      <rect>
-      <x>430</x>
+      <x>410</x>
       <y>400</y>
       <width>61</width>
       <height>51</height>
@@ -102,7 +102,7 @@
    <widget class="QLabel" name="intensityLabel">
     <property name="geometry">
      <rect>
-      <x>430</x>
+      <x>410</x>
       <y>280</y>
       <width>61</width>
       <height>41</height>
@@ -674,7 +674,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image:url(:/images/icons/rightConnectionOff.svg)
+     <string notr="true">border-image:url(:/images/icons/RightConnectionOff.svg)
 </string>
     </property>
     <property name="text">
