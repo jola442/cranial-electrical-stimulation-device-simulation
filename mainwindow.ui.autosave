@@ -220,27 +220,10 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="sDeltaLabel">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>200</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-image:url(:/images/icons/DeltaSOff.svg)
-</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="deltaLabel">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>200</x>
       <y>200</y>
       <width>21</width>
       <height>21</height>
@@ -257,7 +240,7 @@
    <widget class="QLabel" name="alphaLabel">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>280</x>
       <y>200</y>
       <width>21</width>
       <height>21</height>
@@ -274,7 +257,7 @@
    <widget class="QLabel" name="betaOneLabel">
     <property name="geometry">
      <rect>
-      <x>350</x>
+      <x>320</x>
       <y>200</y>
       <width>16</width>
       <height>21</height>
@@ -282,40 +265,6 @@
     </property>
     <property name="styleSheet">
      <string notr="true">border-image:url(:/images/icons/BetaOneOff.svg)
-</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="betaTwoLabel">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>200</y>
-      <width>16</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-image:url(:/images/icons/BetaTwoOff.svg)
-</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="hundredHertzLabel">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>200</y>
-      <width>31</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-image:url(:/images/icons/100HzOff.svg)
 </string>
     </property>
     <property name="text">
@@ -664,27 +613,10 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="deltaLabel_2">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>200</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-image:url(:/images/icons/METOff.svg)
-</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="deltaLabel_3">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>240</x>
       <y>200</y>
       <width>21</width>
       <height>21</height>
