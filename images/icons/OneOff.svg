@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="41.017811mm"
+   height="24.686613mm"
+   viewBox="0 0 41.017811 24.686613"
+   version="1.1"
+   id="svg39714"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   sodipodi:docname="OneOff.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview39716"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="3.9408307"
+     inkscape:cx="114.06225"
+     inkscape:cy="61.154619"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs39711">
+    <rect
+       x="87.562279"
+       y="226.80066"
+       width="37.321632"
+       height="48.805195"
+       id="rect2164-8-9" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(4.1777024,-133.49812)">
+    <path
+       id="rect45-17-2"
+       style="fill:#c8c8c8;fill-opacity:1;fill-rule:evenodd;stroke-width:0.999995"
+       d="M 0 0 L 0 93.304688 L 38.757812 93.304688 L 38.757812 0 L 0 0 z M 116.27148 0 L 116.27148 93.304688 L 155.02734 93.304688 L 155.02734 0 L 116.27148 0 z M 74 7.2304688 C 73.856777 9.5578317 73.300737 11.419989 72.333984 12.816406 C 71.403038 14.177018 70.113856 15.304079 68.466797 16.199219 C 67.141988 16.91533 65.191287 17.46942 62.613281 17.863281 C 60.035275 18.221337 57.619036 18.400391 55.363281 18.400391 L 55.363281 25.705078 L 72.011719 25.705078 L 72.011719 79.306641 L 55.363281 79.306641 L 55.363281 87.470703 L 98.652344 87.470703 L 98.652344 79.306641 L 82.324219 79.306641 L 82.324219 7.2304688 L 74 7.2304688 z "
+       transform="matrix(0.26458333,0,0,0.26458333,-4.1777024,133.49812)" />
+  </g>
+</svg>

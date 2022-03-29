@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="43.01791mm"
+   height="26.686701mm"
+   viewBox="0 0 43.01791 26.686701"
+   version="1.1"
+   id="svg41249"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   sodipodi:docname="OneFlashing.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview41251"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.69664703"
+     inkscape:cx="144.26244"
+     inkscape:cy="-18.660813"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs41246">
+    <rect
+       x="87.562279"
+       y="226.80066"
+       width="37.321632"
+       height="48.805195"
+       id="rect2164-4-0-6-1" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-66.983376,-153.38683)">
+    <path
+       id="rect45-1-7-9-8"
+       style="fill:#00ff00;fill-rule:evenodd;stroke:#ffffff;stroke-width:7.55906;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 3.7792969 3.7792969 L 3.7792969 97.083984 L 42.537109 97.083984 L 42.537109 3.7792969 L 3.7792969 3.7792969 z M 120.05078 3.7792969 L 120.05078 97.083984 L 158.80859 97.083984 L 158.80859 3.7792969 L 120.05078 3.7792969 z M 77.779297 11.009766 C 77.636074 13.337137 77.081989 15.19928 76.115234 16.595703 C 75.184286 17.95632 73.895109 19.083373 72.248047 19.978516 C 70.923236 20.69463 68.970589 21.250668 66.392578 21.644531 C 63.814567 22.002588 61.398338 22.181641 59.142578 22.181641 L 59.142578 29.484375 L 75.792969 29.484375 L 75.792969 83.085938 L 59.142578 83.085938 L 59.142578 91.25 L 102.43164 91.25 L 102.43164 83.085938 L 86.103516 83.085938 L 86.103516 11.009766 L 77.779297 11.009766 z "
+       transform="matrix(0.26458333,0,0,0.26458333,66.983376,153.38683)" />
+  </g>
+</svg>
