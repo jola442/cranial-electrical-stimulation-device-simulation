@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="158.78667mm"
+   height="99.631714mm"
+   viewBox="0 0 158.78667 99.631714"
+   version="1.1"
+   id="svg186"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   sodipodi:docname="PlusTwo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview188"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.5"
+     inkscape:cx="3"
+     inkscape:cy="22"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs183" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-38.107034,-142.90006)">
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke:#ff0000;stroke-width:4.29817;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="circle20458"
+       cy="192.71591"
+       cx="87.923119"
+       rx="47.667"
+       ry="47.666771" />
+    <path
+       id="rect22717"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:0.0930454"
+       d="m 86.284323,151.1663 c -3.4058,0 -6.14773,2.74174 -6.14773,6.14755 v 27.09624 h -27.09606 c -3.405796,0 -6.147718,2.74174 -6.147718,6.14754 v 4.32662 c 0,3.4058 2.741922,6.14773 6.147718,6.14773 h 27.09606 v 27.09605 c 0,3.40581 2.74193,6.14773 6.14773,6.14773 h 4.32662 c 3.4058,0 6.14755,-2.74192 6.14755,-6.14773 v -27.09605 h 27.096217 c 3.40581,0 6.14755,-2.74193 6.14755,-6.14773 v -4.32662 c 0,-3.4058 -2.74174,-6.14754 -6.14755,-6.14754 H 96.758493 v -27.09624 c 0,-3.40581 -2.74175,-6.14755 -6.14755,-6.14755 z" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:128.225px;line-height:1.25;font-family:sans-serif;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:3.20564"
+       x="123.70277"
+       y="240.47308"
+       id="text5560"><tspan
+         sodipodi:role="line"
+         id="tspan5558"
+         style="fill:#ff0000;fill-opacity:1;stroke-width:3.20564"
+         x="123.70277"
+         y="240.47308">2</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="7.1726661mm"
+   height="7.6945963mm"
+   viewBox="0 0 7.1726661 7.6945963"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   sodipodi:docname="DeltaOff.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="7.8816614"
+     inkscape:cx="0.76126082"
+     inkscape:cy="10.150144"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-66.598554,-159.03558)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-5.3171353"
+       y="87.352943"
+       id="text693"><tspan
+         sodipodi:role="line"
+         id="tspan691"
+         style="stroke-width:0.264583"
+         x="-5.3171353"
+         y="87.352943" /></text>
+    <g
+       id="g6991">
+      <g
+         id="g6985">
+        <g
+           id="g6980">
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#c8c8c8;fill-opacity:1;stroke:none;stroke-width:3.5;stroke-miterlimit:4;stroke-dasharray:none"
+             x="66.464195"
+             y="166.73018"
+             id="text1621"><tspan
+               sodipodi:role="line"
+               id="tspan1619"
+               style="fill:#c8c8c8;fill-opacity:1;stroke-width:3.5;stroke-miterlimit:4;stroke-dasharray:none"
+               x="66.464195"
+               y="166.73018">Δ</tspan></text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
