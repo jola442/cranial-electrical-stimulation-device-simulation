@@ -7,7 +7,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     deviceOn = false;
-    batteryLvl = 100;
+    batteryLvl = 1;
+    blinkTimer = new QTimer(this);
+    blinkCount = 0;
+    blinkingNum = 0;
+    connect(blinkTimer, &QTimer::timeout, this, &MainWindow::blinkNumber);
     connect(ui->powerButton, &QPushButton::pressed, this, &MainWindow::startPowerTimer);
     connect(ui->powerButton, &QPushButton::released, this, &MainWindow::selectPowerAction);
 }
@@ -17,10 +21,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//This function starts the timer that measures how long the powerButton is clicked for
 void MainWindow::startPowerTimer(){
     powerTimer.start();
 }
 
+//This function determines the action of the power button depending on how long it is clicked for
 void MainWindow::selectPowerAction(){
     if(powerTimer.elapsed() > 500){
         togglePower();
@@ -31,13 +37,14 @@ void MainWindow::selectPowerAction(){
     }
 }
 
+//This function switches the device on and off
 void MainWindow::togglePower(){
     if(!deviceOn){
         if(batteryLvl > 0){
             ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/powerOn.svg)");
             deviceOn = true;
             displayBattery();
-            displayEarConnections();
+            displayLabels();
         }
     }
 
@@ -45,7 +52,7 @@ void MainWindow::togglePower(){
         ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/powerOff.svg)");
         deviceOn = false;
         hideBattery();
-        hideEarConnections();
+        hideLabels();
     }
 
 
@@ -55,9 +62,12 @@ void MainWindow::navigateSessionGroups(){
 
 }
 
+//This function highlights parts of the number graph depending on the battery level of the device
 void MainWindow::displayBattery(){
     if(batteryLvl > 0 && batteryLvl < 12.5){
-        ui->oneLabel->setStyleSheet("border-image: url(:/images/icons/One.svg)");
+//        ui->oneLabel->setStyleSheet("border-image: url(:/images/icons/One.svg)");
+        blinkingNum = 1;
+        blinkTimer->start(300);
     }
 
     if(batteryLvl >= 12.5){
@@ -91,6 +101,7 @@ void MainWindow::displayBattery(){
 
 }
 
+//This function changes the colour of all icons their respective colours to grey
 void MainWindow::hideBattery(){
     ui->oneLabel->setStyleSheet("border-image: url(:/images/icons/OneOff.svg)");
     ui->twoLabel->setStyleSheet("border-image: url(:/images/icons/TwoOff.svg)");
@@ -103,17 +114,100 @@ void MainWindow::hideBattery(){
 
 }
 
-void MainWindow::displayEarConnections(){
+//This function changes the colour of all icons from grey to their respective colours
+void MainWindow::displayLabels(){
     ui->rightEarLabel->setStyleSheet("border-image: url(:/images/icons/Right.svg)");
     ui->leftEarLabel->setStyleSheet("border-image: url(:/images/icons/Left.svg)");
     ui->leftConnectionLabel->setStyleSheet("border-image: url(:/images/icons/LeftConnection.svg)");
     ui->rightConnectionLabel->setStyleSheet("border-image: url(:/images/icons/RightConnection.svg)");
+    ui->zeroTwoFiveLabel->setStyleSheet("color: rgba(0, 255, 0)");
+    ui->zeroFiveLabel->setStyleSheet("color: rgba(0, 255, 0)");
+    ui->zeroSevenFiveLabel->setStyleSheet("color: rgba(0, 255, 0)");
+    ui->oneZeroZeroLabel->setStyleSheet("color:yellow");
+    ui->oneFiveZeroLabel->setStyleSheet("color:yellow");
+    ui->twoZeroZeroLabel->setStyleSheet("color:yellow");
+    ui->plusOneLabel->setStyleSheet("border-image: url(:/images/icons/PlusOne.svg)");
+    ui->plusTwoLabel->setStyleSheet("border-image: url(:/images/icons/PlusTwo.svg)");
 }
 
-void MainWindow::hideEarConnections(){
+//This function changes the colour of all icons from their respective colours to grey
+void MainWindow::hideLabels(){
     ui->rightEarLabel->setStyleSheet("border-image: url(:/images/icons/RightOff.svg)");
     ui->leftEarLabel->setStyleSheet("border-image: url(:/images/icons/LeftOff.svg)");
     ui->leftConnectionLabel->setStyleSheet("border-image: url(:/images/icons/LeftConnectionOff.svg)");
     ui->rightConnectionLabel->setStyleSheet("border-image: url(:/images/icons/LeftConnectionOff.svg)");
+    ui->zeroTwoFiveLabel->setStyleSheet("color: rgba(200, 200, 200)");
+    ui->zeroFiveLabel->setStyleSheet("color: rgba(200, 200, 200)");;
+    ui->zeroSevenFiveLabel->setStyleSheet("color: rgba(200, 200, 200)");
+    ui->oneZeroZeroLabel->setStyleSheet("color: rgba(200, 200, 200)");
+    ui->oneFiveZeroLabel->setStyleSheet("color: rgba(200, 200, 200)");
+    ui->twoZeroZeroLabel->setStyleSheet("color: rgba(200, 200, 200)");
+    ui->plusOneLabel->setStyleSheet("border-image: url(:/images/icons/PlusOneOff.svg)");
+    ui->plusTwoLabel->setStyleSheet("border-image: url(:/images/icons/PlusTwoOff.svg)");
 }
 
+//This function causes the label corresponding to blinkingNum to blink
+void MainWindow::blinkNumber(){
+    QString blinkingStyleSheet = "";
+    QString normalStyleSheet = "";
+    QLabel* label = NULL;
+
+    switch (blinkingNum){
+        case 1:
+            label = ui->oneLabel;
+            blinkingStyleSheet =  "border-image: url(:/images/icons/OneFlashing.svg)";
+            normalStyleSheet = "border-image: url(:/images/icons/One.svg)";
+            break;
+        case 2:
+            label = ui->twoLabel;
+            blinkingStyleSheet =  "border-image: url(:/images/icons/TwoFlashing.svg)";
+            normalStyleSheet = "border-image: url(:/images/icons/Two.svg)";
+            break;
+        case 3:
+            label = ui->threeLabel;
+            blinkingStyleSheet =  "border-image: url(:/images/icons/ThreeFlashing.svg)";
+            normalStyleSheet = "border-image: url(:/images/icons/Three.svg)";
+            break;
+        case 4:
+            label = ui->fourLabel;
+            blinkingStyleSheet =  "border-image: url(:/images/icons/FourFlashing.svg)";
+            normalStyleSheet = "border-image: url(:/images/icons/Four.svg)";
+            break;
+        case 5:
+            label = ui->fiveLabel;
+            blinkingStyleSheet =  "border-image: url(:/images/icons/FiveFlashing.svg)";
+            normalStyleSheet = "border-image: url(:/images/icons/Five.svg)";
+            break;
+        case 6:
+            label = ui->sixLabel;
+            blinkingStyleSheet =  "border-image: url(:/images/icons/SixFlashing.svg)";
+            normalStyleSheet = "border-image: url(:/images/icons/Six.svg)";
+            break;
+        case 7:
+            label = ui->sevenLabel;
+            blinkingStyleSheet =  "border-image: url(:/images/icons/SevenFlashing.svg)";
+            normalStyleSheet = "border-image: url(:/images/icons/Seven.svg)";
+            break;
+        case 8:
+            label = ui->eightLabel;
+            blinkingStyleSheet =  "border-image: url(:/images/icons/EightFlashing.svg)";
+            normalStyleSheet = "border-image: url(:/images/icons/Eight.svg)";
+            break;
+    }
+
+    if(blinkCount < 10){
+        if(blinkCount % 2 == 0){
+           label->setStyleSheet(blinkingStyleSheet);
+        }
+        else{
+            label->setStyleSheet(normalStyleSheet);
+        }
+        blinkCount++;
+    }
+
+    else{
+        blinkTimer->stop();
+        blinkCount = 0;
+    }
+
+}

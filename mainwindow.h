@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QElapsedTimer>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,15 +19,19 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    float batteryLvl;
-    bool deviceOn;
+    float batteryLvl;   //the battery level of the device
+    bool deviceOn;      //whether the device is on or off
     void displayBattery();
     void hideBattery();
-    void displayEarConnections();
-    void hideEarConnections();
-    QElapsedTimer powerTimer;
+    void displayLabels();
+    void hideLabels();
+    QElapsedTimer powerTimer;   //tracks how long the powerButton is pressed
+    QTimer* blinkTimer;         //used to call blinkNumber() at regular intervals
+    int blinkCount;             //tracks how many times a number on the number graph has blinked
+    int blinkingNum;            //the number that is being blinked (1-8)
     void togglePower();
     void navigateSessionGroups();
+    void blinkNumber();
 
 private slots:
     void startPowerTimer();
