@@ -428,7 +428,7 @@
      <string>0.25</string>
     </property>
    </widget>
-   <widget class="QLabel" name="zerooFiveLabel">
+   <widget class="QLabel" name="zeroFiveLabel">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -512,7 +512,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="twoZeroZeroLabe">
+   <widget class="QLabel" name="twoZeroZeroLabel">
     <property name="geometry">
      <rect>
       <x>330</x>
