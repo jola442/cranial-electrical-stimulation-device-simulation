@@ -220,27 +220,10 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="sDeltaLabel">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>200</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-image:url(:/images/icons/DeltaSOff.svg)
-</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="deltaLabel">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>260</x>
       <y>200</y>
       <width>21</width>
       <height>21</height>
@@ -254,75 +237,41 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="alphaLabel">
+   <widget class="QLabel" name="metLabel">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>160</x>
+      <y>200</y>
+      <width>41</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image:url(:/images/icons/METOff.svg)
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="subDeltaLabel">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
       <y>200</y>
       <width>21</width>
       <height>21</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image:url(:/images/icons/AlphaOff.svg)
+     <string notr="true">border-image:url(:/images/icons/DeltaSOff.svg)
 </string>
     </property>
     <property name="text">
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="betaOneLabel">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>200</y>
-      <width>16</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-image:url(:/images/icons/BetaOneOff.svg)
-</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="betaTwoLabel">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>200</y>
-      <width>16</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-image:url(:/images/icons/BetaTwoOff.svg)
-</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="hundredHertzLabel">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>200</y>
-      <width>31</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-image:url(:/images/icons/100HzOff.svg)
-</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="onwLabel">
+   <widget class="QLabel" name="oneLabel">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -424,7 +373,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="eightLabel_2">
+   <widget class="QLabel" name="eightLabel">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -441,7 +390,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="eightLabel">
+   <widget class="QLabel" name="sevenLabel">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -521,7 +470,7 @@
      <string>0.75</string>
     </property>
    </widget>
-   <widget class="QLabel" name="onwZeroZeroLabel">
+   <widget class="QLabel" name="oneZeroZeroLabel">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -542,7 +491,7 @@
      <string>1.00</string>
     </property>
    </widget>
-   <widget class="QLabel" name="pluaTwoLabel">
+   <widget class="QLabel" name="plusTwoLabel">
     <property name="geometry">
      <rect>
       <x>340</x>
@@ -605,7 +554,7 @@
      <string>1.50</string>
     </property>
    </widget>
-   <widget class="QLabel" name="pluaOneLabel">
+   <widget class="QLabel" name="plusOneLabel">
     <property name="geometry">
      <rect>
       <x>340</x>
@@ -647,7 +596,7 @@
      <string>tDCS</string>
     </property>
    </widget>
-   <widget class="QLabel" name="leftConnectionLabel_2">
+   <widget class="QLabel" name="rightConnectionLabel">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -664,27 +613,10 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="deltaLabel_2">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>200</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-image:url(:/images/icons/METOff.svg)
-</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="deltaLabel_3">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>310</x>
       <y>200</y>
       <width>21</width>
       <height>21</height>
@@ -692,6 +624,23 @@
     </property>
     <property name="styleSheet">
      <string notr="true">border-image:url(:/images/icons/ThetaOff.svg)
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="powerLabel">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>380</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image:url(:/images/icons/powerOff.svg)
 </string>
     </property>
     <property name="text">

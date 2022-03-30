@@ -37,32 +37,29 @@ public:
     QLabel *twentyMinsLabel;
     QLabel *customSessionOff;
     QLabel *fortyFiveMinsLabel;
-    QLabel *sDeltaLabel;
     QLabel *deltaLabel;
-    QLabel *alphaLabel;
-    QLabel *betaOneLabel;
-    QLabel *betaTwoLabel;
-    QLabel *hundredHertzLabel;
-    QLabel *onwLabel;
+    QLabel *metLabel;
+    QLabel *subDeltaLabel;
+    QLabel *oneLabel;
     QLabel *twoLabel;
     QLabel *threeLabel;
     QLabel *fourLabel;
     QLabel *fiveLabel;
     QLabel *sixLabel;
-    QLabel *eightLabel_2;
     QLabel *eightLabel;
+    QLabel *sevenLabel;
     QLabel *zeroTwoFiveLabel;
     QLabel *zerooFiveLabel;
     QLabel *zeroSevenFiveLabel;
-    QLabel *onwZeroZeroLabel;
-    QLabel *pluaTwoLabel;
+    QLabel *oneZeroZeroLabel;
+    QLabel *plusTwoLabel;
     QLabel *twoZeroZeroLabe;
     QLabel *oneFiveZeroLabel;
-    QLabel *pluaOneLabel;
+    QLabel *plusOneLabel;
     QLabel *tDCSLabel;
-    QLabel *leftConnectionLabel_2;
-    QLabel *deltaLabel_2;
+    QLabel *rightConnectionLabel;
     QLabel *deltaLabel_3;
+    QLabel *powerLabel;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -134,40 +131,25 @@ public:
         fortyFiveMinsLabel->setGeometry(QRect(240, 150, 41, 31));
         fortyFiveMinsLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/45minSessionOff.svg)\n"
 ""));
-        sDeltaLabel = new QLabel(centralwidget);
-        sDeltaLabel->setObjectName(QString::fromUtf8("sDeltaLabel"));
-        sDeltaLabel->setGeometry(QRect(190, 200, 21, 21));
-        sDeltaLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/DeltaSOff.svg)\n"
-""));
         deltaLabel = new QLabel(centralwidget);
         deltaLabel->setObjectName(QString::fromUtf8("deltaLabel"));
-        deltaLabel->setGeometry(QRect(230, 200, 21, 21));
+        deltaLabel->setGeometry(QRect(260, 200, 21, 21));
         deltaLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/DeltaOff.svg)\n"
 ""));
-        alphaLabel = new QLabel(centralwidget);
-        alphaLabel->setObjectName(QString::fromUtf8("alphaLabel"));
-        alphaLabel->setGeometry(QRect(310, 200, 21, 21));
-        alphaLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/AlphaOff.svg)\n"
+        metLabel = new QLabel(centralwidget);
+        metLabel->setObjectName(QString::fromUtf8("metLabel"));
+        metLabel->setGeometry(QRect(160, 200, 41, 21));
+        metLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/METOff.svg)\n"
 ""));
-        betaOneLabel = new QLabel(centralwidget);
-        betaOneLabel->setObjectName(QString::fromUtf8("betaOneLabel"));
-        betaOneLabel->setGeometry(QRect(350, 200, 16, 21));
-        betaOneLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/BetaOneOff.svg)\n"
+        subDeltaLabel = new QLabel(centralwidget);
+        subDeltaLabel->setObjectName(QString::fromUtf8("subDeltaLabel"));
+        subDeltaLabel->setGeometry(QRect(220, 200, 21, 21));
+        subDeltaLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/DeltaSOff.svg)\n"
 ""));
-        betaTwoLabel = new QLabel(centralwidget);
-        betaTwoLabel->setObjectName(QString::fromUtf8("betaTwoLabel"));
-        betaTwoLabel->setGeometry(QRect(380, 200, 16, 21));
-        betaTwoLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/BetaTwoOff.svg)\n"
-""));
-        hundredHertzLabel = new QLabel(centralwidget);
-        hundredHertzLabel->setObjectName(QString::fromUtf8("hundredHertzLabel"));
-        hundredHertzLabel->setGeometry(QRect(410, 200, 31, 21));
-        hundredHertzLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/100HzOff.svg)\n"
-""));
-        onwLabel = new QLabel(centralwidget);
-        onwLabel->setObjectName(QString::fromUtf8("onwLabel"));
-        onwLabel->setGeometry(QRect(260, 420, 41, 16));
-        onwLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/OneOff.svg)\n"
+        oneLabel = new QLabel(centralwidget);
+        oneLabel->setObjectName(QString::fromUtf8("oneLabel"));
+        oneLabel->setGeometry(QRect(260, 420, 41, 16));
+        oneLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/OneOff.svg)\n"
 ""));
         twoLabel = new QLabel(centralwidget);
         twoLabel->setObjectName(QString::fromUtf8("twoLabel"));
@@ -194,15 +176,15 @@ public:
         sixLabel->setGeometry(QRect(260, 320, 41, 16));
         sixLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/SixOff.svg)\n"
 ""));
-        eightLabel_2 = new QLabel(centralwidget);
-        eightLabel_2->setObjectName(QString::fromUtf8("eightLabel_2"));
-        eightLabel_2->setGeometry(QRect(260, 280, 41, 16));
-        eightLabel_2->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/EightOff.svg)\n"
-""));
         eightLabel = new QLabel(centralwidget);
         eightLabel->setObjectName(QString::fromUtf8("eightLabel"));
-        eightLabel->setGeometry(QRect(260, 300, 41, 16));
-        eightLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/SevenOff.svg)\n"
+        eightLabel->setGeometry(QRect(260, 280, 41, 16));
+        eightLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/EightOff.svg)\n"
+""));
+        sevenLabel = new QLabel(centralwidget);
+        sevenLabel->setObjectName(QString::fromUtf8("sevenLabel"));
+        sevenLabel->setGeometry(QRect(260, 300, 41, 16));
+        sevenLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/SevenOff.svg)\n"
 ""));
         zeroTwoFiveLabel = new QLabel(centralwidget);
         zeroTwoFiveLabel->setObjectName(QString::fromUtf8("zeroTwoFiveLabel"));
@@ -221,16 +203,16 @@ public:
         zeroSevenFiveLabel->setGeometry(QRect(330, 380, 41, 16));
         zeroSevenFiveLabel->setFont(font1);
         zeroSevenFiveLabel->setStyleSheet(QString::fromUtf8("color: rgba(200,200, 200)"));
-        onwZeroZeroLabel = new QLabel(centralwidget);
-        onwZeroZeroLabel->setObjectName(QString::fromUtf8("onwZeroZeroLabel"));
-        onwZeroZeroLabel->setGeometry(QRect(330, 360, 41, 16));
-        onwZeroZeroLabel->setFont(font1);
-        onwZeroZeroLabel->setStyleSheet(QString::fromUtf8("color: rgba(200,200, 200)"));
-        pluaTwoLabel = new QLabel(centralwidget);
-        pluaTwoLabel->setObjectName(QString::fromUtf8("pluaTwoLabel"));
-        pluaTwoLabel->setGeometry(QRect(340, 280, 21, 16));
-        pluaTwoLabel->setFont(font1);
-        pluaTwoLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/PlusTwoOff.svg)"));
+        oneZeroZeroLabel = new QLabel(centralwidget);
+        oneZeroZeroLabel->setObjectName(QString::fromUtf8("oneZeroZeroLabel"));
+        oneZeroZeroLabel->setGeometry(QRect(330, 360, 41, 16));
+        oneZeroZeroLabel->setFont(font1);
+        oneZeroZeroLabel->setStyleSheet(QString::fromUtf8("color: rgba(200,200, 200)"));
+        plusTwoLabel = new QLabel(centralwidget);
+        plusTwoLabel->setObjectName(QString::fromUtf8("plusTwoLabel"));
+        plusTwoLabel->setGeometry(QRect(340, 280, 21, 16));
+        plusTwoLabel->setFont(font1);
+        plusTwoLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/PlusTwoOff.svg)"));
         twoZeroZeroLabe = new QLabel(centralwidget);
         twoZeroZeroLabe->setObjectName(QString::fromUtf8("twoZeroZeroLabe"));
         twoZeroZeroLabe->setGeometry(QRect(330, 320, 41, 16));
@@ -241,30 +223,30 @@ public:
         oneFiveZeroLabel->setGeometry(QRect(330, 340, 41, 16));
         oneFiveZeroLabel->setFont(font1);
         oneFiveZeroLabel->setStyleSheet(QString::fromUtf8("color: rgba(200,200, 200)"));
-        pluaOneLabel = new QLabel(centralwidget);
-        pluaOneLabel->setObjectName(QString::fromUtf8("pluaOneLabel"));
-        pluaOneLabel->setGeometry(QRect(340, 300, 21, 16));
-        pluaOneLabel->setFont(font1);
-        pluaOneLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/PlusOneOff.svg)"));
+        plusOneLabel = new QLabel(centralwidget);
+        plusOneLabel->setObjectName(QString::fromUtf8("plusOneLabel"));
+        plusOneLabel->setGeometry(QRect(340, 300, 21, 16));
+        plusOneLabel->setFont(font1);
+        plusOneLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/PlusOneOff.svg)"));
         tDCSLabel = new QLabel(centralwidget);
         tDCSLabel->setObjectName(QString::fromUtf8("tDCSLabel"));
         tDCSLabel->setGeometry(QRect(330, 250, 54, 17));
         tDCSLabel->setFont(font1);
         tDCSLabel->setStyleSheet(QString::fromUtf8("color:red"));
-        leftConnectionLabel_2 = new QLabel(centralwidget);
-        leftConnectionLabel_2->setObjectName(QString::fromUtf8("leftConnectionLabel_2"));
-        leftConnectionLabel_2->setGeometry(QRect(510, 110, 31, 16));
-        leftConnectionLabel_2->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/RightConnectionOff.svg)\n"
-""));
-        deltaLabel_2 = new QLabel(centralwidget);
-        deltaLabel_2->setObjectName(QString::fromUtf8("deltaLabel_2"));
-        deltaLabel_2->setGeometry(QRect(150, 200, 21, 21));
-        deltaLabel_2->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/METOff.svg)\n"
+        rightConnectionLabel = new QLabel(centralwidget);
+        rightConnectionLabel->setObjectName(QString::fromUtf8("rightConnectionLabel"));
+        rightConnectionLabel->setGeometry(QRect(510, 110, 31, 16));
+        rightConnectionLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/RightConnectionOff.svg)\n"
 ""));
         deltaLabel_3 = new QLabel(centralwidget);
         deltaLabel_3->setObjectName(QString::fromUtf8("deltaLabel_3"));
-        deltaLabel_3->setGeometry(QRect(270, 200, 21, 21));
+        deltaLabel_3->setGeometry(QRect(310, 200, 21, 21));
         deltaLabel_3->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/ThetaOff.svg)\n"
+""));
+        powerLabel = new QLabel(centralwidget);
+        powerLabel->setObjectName(QString::fromUtf8("powerLabel"));
+        powerLabel->setGeometry(QRect(520, 380, 41, 16));
+        powerLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/powerOff.svg)\n"
 ""));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -294,32 +276,29 @@ public:
         twentyMinsLabel->setText(QString());
         customSessionOff->setText(QString());
         fortyFiveMinsLabel->setText(QString());
-        sDeltaLabel->setText(QString());
         deltaLabel->setText(QString());
-        alphaLabel->setText(QString());
-        betaOneLabel->setText(QString());
-        betaTwoLabel->setText(QString());
-        hundredHertzLabel->setText(QString());
-        onwLabel->setText(QString());
+        metLabel->setText(QString());
+        subDeltaLabel->setText(QString());
+        oneLabel->setText(QString());
         twoLabel->setText(QString());
         threeLabel->setText(QString());
         fourLabel->setText(QString());
         fiveLabel->setText(QString());
         sixLabel->setText(QString());
-        eightLabel_2->setText(QString());
         eightLabel->setText(QString());
+        sevenLabel->setText(QString());
         zeroTwoFiveLabel->setText(QApplication::translate("MainWindow", "0.25", nullptr));
         zerooFiveLabel->setText(QApplication::translate("MainWindow", "0.50", nullptr));
         zeroSevenFiveLabel->setText(QApplication::translate("MainWindow", "0.75", nullptr));
-        onwZeroZeroLabel->setText(QApplication::translate("MainWindow", "1.00", nullptr));
-        pluaTwoLabel->setText(QString());
+        oneZeroZeroLabel->setText(QApplication::translate("MainWindow", "1.00", nullptr));
+        plusTwoLabel->setText(QString());
         twoZeroZeroLabe->setText(QApplication::translate("MainWindow", "2.00", nullptr));
         oneFiveZeroLabel->setText(QApplication::translate("MainWindow", "1.50", nullptr));
-        pluaOneLabel->setText(QString());
+        plusOneLabel->setText(QString());
         tDCSLabel->setText(QApplication::translate("MainWindow", "tDCS", nullptr));
-        leftConnectionLabel_2->setText(QString());
-        deltaLabel_2->setText(QString());
+        rightConnectionLabel->setText(QString());
         deltaLabel_3->setText(QString());
+        powerLabel->setText(QString());
     } // retranslateUi
 
 };
