@@ -66,5 +66,7 @@
         <file>images/icons/test.svg</file>
         <file>images/icons/Theta.svg</file>
         <file>images/icons/ThetaOff.svg</file>
+        <file>images/icons/powerOff.svg</file>
+        <file>images/icons/powerOn.svg</file>
     </qresource>
 </RCC>
