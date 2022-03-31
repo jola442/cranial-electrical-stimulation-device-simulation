@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QElapsedTimer>
 #include <QTimer>
+#include <QtWidgets>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,8 +30,8 @@ private:
     QTimer* blinkTimer;         //used to call blinkNumber() at regular intervals
     int blinkCount;             //tracks how many times a number on the number graph has blinked
     int blinkingNum;            //the number that is being blinked (1-8)
+    QLabel* currentLabel;
     void togglePower();
-    void navigateSessionGroups();
     void blinkNumber();
     void navigateSessionGroups();
     void displaySessionLabel(QLabel* label);

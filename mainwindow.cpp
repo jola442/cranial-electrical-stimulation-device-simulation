@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     blinkTimer = new QTimer(this);
     blinkCount = 0;
     blinkingNum = 0;
+    currentLabel = NULL;
     connect(blinkTimer, &QTimer::timeout, this, &MainWindow::blinkNumber);
     connect(ui->powerButton, &QPushButton::pressed, this, &MainWindow::startPowerTimer);
     connect(ui->powerButton, &QPushButton::released, this, &MainWindow::selectPowerAction);
@@ -66,8 +67,8 @@ void MainWindow::togglePower(){
 
 void MainWindow::displaySessionLabel(QLabel* label){
 
-    if(label == ui->sessionLabel){
-        ui->sessionLabel->setStyleSheet("border-image: url(:/images/icons/20minSession.svg)");
+    if(label == ui->twentyMinsLabel){
+        ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSession.svg)");
     }
 
     else if(label == ui->fortyFiveMinsLabel){
@@ -75,7 +76,7 @@ void MainWindow::displaySessionLabel(QLabel* label){
     }
 
     else if(label == ui->customSessionOff){
-        ui->customSessionOff->setStyleSheet("border-image: url(:/images/icons/customSession.svg)");
+        ui->customSessionOff->setStyleSheet("border-image: url(:/images/icons/CustomSession.svg)");
     }
 }
 
@@ -111,10 +112,15 @@ void MainWindow::displaySessionLabel(QLabel* label){
 // }
 
 
-void MainWindow::navigateSessionGroups(){
 
-    QLabel* currentLabel = ui->twentyMinsLabel;
-    displaySessionLabel(currentLabel);
+
+void MainWindow::navigateSessionGroups(){
+    if(currentLabel == NULL){
+        currentLabel = ui->twentyMinsLabel;
+        displaySessionLabel(currentLabel);
+    }
+
+
 
     if(currentLabel == ui->twentyMinsLabel){
         ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
@@ -130,7 +136,7 @@ void MainWindow::navigateSessionGroups(){
     }
 
     else if(currentLabel == ui->customSessionOff){
-        ui->customSessionOff->setStyleSheet("border-image: url(:/images/icons/customSessionOff.svg)");
+        ui->customSessionOff->setStyleSheet("border-image: url(:/images/icons/CustomSessionOff.svg)");
         currentLabel = ui->twentyMinsLabel;
         displaySessionLabel(currentLabel);
     }
