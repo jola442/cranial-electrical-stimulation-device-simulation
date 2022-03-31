@@ -12,11 +12,11 @@
         <file>images/icons/45minSessionOff.svg</file>
         <file>images/icons/AlphaOff.svg</file>
         <file>images/icons/BetaOneOff.svg</file>
-        <file>images/icons/BetaOneOn.svg</file>
+        <file>images/icons/BetaOne.svg</file>
         <file>images/icons/BetaTwoOff.svg</file>
-        <file>images/icons/BetaTwoOn.svg</file>
+        <file>images/icons/BetaTwo.svg</file>
         <file>images/icons/DeltaOff.svg</file>
-        <file>images/icons/DeltaOn.svg</file>
+        <file>images/icons/Delta.svg</file>
         <file>images/icons/DeltaS.svg</file>
         <file>images/icons/DeltaSOff.svg</file>
         <file>images/icons/Eight.svg</file>
@@ -57,16 +57,15 @@
         <file>images/icons/20minSession.svg</file>
         <file>images/icons/20minSessionOff.svg</file>
         <file>images/icons/Alpha.svg</file>
-        <file>images/icons/leftConnectionOff.svg</file>
+        <file>images/icons/LeftConnectionOff.svg</file>
         <file>images/icons/CustomSession.svg</file>
         <file>images/icons/CustomSessionOff.svg</file>
         <file>images/icons/RightConnectionOff.svg</file>
         <file>images/icons/PlusOneOff.svg</file>
         <file>images/icons/PlusTwoOff.svg</file>
-        <file>images/icons/test.svg</file>
         <file>images/icons/Theta.svg</file>
         <file>images/icons/ThetaOff.svg</file>
-        <file>images/icons/powerOff.svg</file>
-        <file>images/icons/powerOn.svg</file>
+        <file>images/icons/PowerOff.svg</file>
+        <file>images/icons/Power.svg</file>
     </qresource>
 </RCC>

@@ -35,7 +35,7 @@ public:
     QLabel *rightEarLabel;
     QLabel *leftConnectionLabel;
     QLabel *twentyMinsLabel;
-    QLabel *customSessionOff;
+    QLabel *customSessionLabel;
     QLabel *fortyFiveMinsLabel;
     QLabel *deltaLabel;
     QLabel *metLabel;
@@ -58,7 +58,7 @@ public:
     QLabel *plusOneLabel;
     QLabel *tDCSLabel;
     QLabel *rightConnectionLabel;
-    QLabel *deltaLabel_3;
+    QLabel *thetaLabel;
     QLabel *powerLabel;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -114,17 +114,17 @@ public:
         leftConnectionLabel = new QLabel(centralwidget);
         leftConnectionLabel->setObjectName(QString::fromUtf8("leftConnectionLabel"));
         leftConnectionLabel->setGeometry(QRect(450, 110, 31, 16));
-        leftConnectionLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/leftConnectionOff.svg)\n"
+        leftConnectionLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/LeftConnectionOff.svg)\n"
 ""));
         twentyMinsLabel = new QLabel(centralwidget);
         twentyMinsLabel->setObjectName(QString::fromUtf8("twentyMinsLabel"));
         twentyMinsLabel->setGeometry(QRect(180, 150, 41, 31));
         twentyMinsLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/20minSessionOff.svg)\n"
 ""));
-        customSessionOff = new QLabel(centralwidget);
-        customSessionOff->setObjectName(QString::fromUtf8("customSessionOff"));
-        customSessionOff->setGeometry(QRect(300, 150, 41, 31));
-        customSessionOff->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/CustomSessionOff.svg)\n"
+        customSessionLabel = new QLabel(centralwidget);
+        customSessionLabel->setObjectName(QString::fromUtf8("customSessionLabel"));
+        customSessionLabel->setGeometry(QRect(300, 150, 41, 31));
+        customSessionLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/CustomSessionOff.svg)\n"
 ""));
         fortyFiveMinsLabel = new QLabel(centralwidget);
         fortyFiveMinsLabel->setObjectName(QString::fromUtf8("fortyFiveMinsLabel"));
@@ -238,10 +238,10 @@ public:
         rightConnectionLabel->setGeometry(QRect(510, 110, 31, 16));
         rightConnectionLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/RightConnectionOff.svg)\n"
 ""));
-        deltaLabel_3 = new QLabel(centralwidget);
-        deltaLabel_3->setObjectName(QString::fromUtf8("deltaLabel_3"));
-        deltaLabel_3->setGeometry(QRect(310, 200, 21, 21));
-        deltaLabel_3->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/ThetaOff.svg)\n"
+        thetaLabel = new QLabel(centralwidget);
+        thetaLabel->setObjectName(QString::fromUtf8("thetaLabel"));
+        thetaLabel->setGeometry(QRect(310, 200, 21, 21));
+        thetaLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/ThetaOff.svg)\n"
 ""));
         powerLabel = new QLabel(centralwidget);
         powerLabel->setObjectName(QString::fromUtf8("powerLabel"));
@@ -274,7 +274,7 @@ public:
         rightEarLabel->setText(QString());
         leftConnectionLabel->setText(QString());
         twentyMinsLabel->setText(QString());
-        customSessionOff->setText(QString());
+        customSessionLabel->setText(QString());
         fortyFiveMinsLabel->setText(QString());
         deltaLabel->setText(QString());
         metLabel->setText(QString());
@@ -297,7 +297,7 @@ public:
         plusOneLabel->setText(QString());
         tDCSLabel->setText(QApplication::translate("MainWindow", "tDCS", nullptr));
         rightConnectionLabel->setText(QString());
-        deltaLabel_3->setText(QString());
+        thetaLabel->setText(QString());
         powerLabel->setText(QString());
     } // retranslateUi
 

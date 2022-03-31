@@ -103,7 +103,6 @@ void MainWindow::displaySessionLabel(QLabel* label){
 //     ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaOn.svg)");
 //     ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaS.svg)");
 
-//     // change this to theta later
 //     ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
 
 

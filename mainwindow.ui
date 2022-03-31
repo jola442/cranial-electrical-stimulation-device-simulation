@@ -162,7 +162,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image:url(:/images/icons/leftConnectionOff.svg)
+     <string notr="true">border-image:url(:/images/icons/LeftConnectionOff.svg)
 </string>
     </property>
     <property name="text">
@@ -186,7 +186,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="customSessionOff">
+   <widget class="QLabel" name="customSessionLabel">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -613,7 +613,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="deltaLabel_3">
+   <widget class="QLabel" name="thetaLabel">
     <property name="geometry">
      <rect>
       <x>310</x>
