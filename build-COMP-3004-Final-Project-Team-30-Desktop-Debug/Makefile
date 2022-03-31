@@ -358,21 +358,21 @@ qrc_resources.cpp: ../resources.qrc \
 		../images/buttons/tickButton.svg \
 		../images/overlay/OasisProSkeleton.svg \
 		../images/icons/100HzOff.svg \
-		../images/icons/BetaOneOn.svg \
+		../images/icons/LeftConnectionOff.svg \
 		../images/icons/100Hz.svg \
+		../images/icons/Delta.svg \
 		../images/icons/PlusTwo.svg \
+		../images/icons/Power.svg \
 		../images/icons/FiveOff.svg \
-		../images/icons/BetaTwoOn.svg \
 		../images/icons/PlusOneOff.svg \
+		../images/icons/BetaTwo.svg \
 		../images/icons/One.svg \
 		../images/icons/AlphaOff.svg \
 		../images/icons/Five.svg \
 		../images/icons/20minSession.svg \
 		../images/icons/PlusTwoOff.svg \
 		../images/icons/CustomSession.svg \
-		../images/icons/powerOff.svg \
 		../images/icons/3hourSession.svg \
-		../images/icons/leftConnectionOff.svg \
 		../images/icons/RightConnectionOff.svg \
 		../images/icons/SixOff.svg \
 		../images/icons/DeltaOff.svg \
@@ -392,7 +392,6 @@ qrc_resources.cpp: ../resources.qrc \
 		../images/icons/45minSessionOff.svg \
 		../images/icons/METOff.svg \
 		../images/icons/Two.svg \
-		../images/icons/test.svg \
 		../images/icons/Theta.svg \
 		../images/icons/20minSessionOff.svg \
 		../images/icons/RightOff.svg \
@@ -410,11 +409,11 @@ qrc_resources.cpp: ../resources.qrc \
 		../images/icons/PlusOne.svg \
 		../images/icons/CustomSessionOff.svg \
 		../images/icons/DeltaSOff.svg \
+		../images/icons/PowerOff.svg \
 		../images/icons/ThetaOff.svg \
-		../images/icons/DeltaOn.svg \
+		../images/icons/BetaOne.svg \
 		../images/icons/RightConnection.svg \
 		../images/icons/LeftConnection.svg \
-		../images/icons/powerOn.svg \
 		../images/icons/Eight.svg \
 		../images/icons/Three.svg \
 		../images/icons/OneFlashing.svg \
