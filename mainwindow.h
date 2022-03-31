@@ -32,6 +32,7 @@ private:
     void togglePower();
     void navigateSessionGroups();
     void blinkNumber();
+    Therapy* therapies[MAX_THERAPY_COUNT];
 
 private slots:
     void startPowerTimer();
