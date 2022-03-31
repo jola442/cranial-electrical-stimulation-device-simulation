@@ -16,10 +16,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->powerButton, &QPushButton::released, this, &MainWindow::selectPowerAction);
 
     // populate therapies
-    therapies[0] = new Therapy("MET", 0.5, 3.0);
-    therapies[1] = new Therapy("DELTA", 2.5, 5.0);
-    therapies[2] = new Therapy("THETA", 6.0, 8.0);
-    therapies[3] = new Therapy("ALPHA", 9.0, 11.0);
+    // therapies[0] = new Therapy("MET", 0.5, 3.0);
+    // therapies[1] = new Therapy("DELTA", 2.5, 5.0);
+    // therapies[2] = new Therapy("THETA", 6.0, 8.0);
+    // therapies[3] = new Therapy("ALPHA", 9.0, 11.0);
 }
 
 MainWindow::~MainWindow()
@@ -79,36 +79,36 @@ void MainWindow::displaySessionLabel(QLabel* label){
     }
 }
 
-void mainwindow::displaySessionLabels(){
+// void mainwindow::displaySessionLabels(){
 
-    ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSession.svg)");
-    ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSession.svg)");
-    ui->customSessionOff->setStyleSheet("border-image: url(:/images/icons/customSession.svg)");
+//     ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSession.svg)");
+//     ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSession.svg)");
+//     ui->customSessionOff->setStyleSheet("border-image: url(:/images/icons/customSession.svg)");
 
-    ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
-    ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaOn.svg)");
-    ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaS.svg)");
+//     ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
+//     ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaOn.svg)");
+//     ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaS.svg)");
 
-    // change this to theta later
-    // change customSesionOff to customSession
-    ui->deltaLabel_3->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
-}
+//     // change this to theta later
+//     // change customSesionOff to customSession
+//     ui->deltaLabel_3->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
+// }
 
-void mainwindow:: hideSessionLabels(){
+// void mainwindow:: hideSessionLabels(){
 
-    ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSession.svg)");
-    ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSession.svg)");
-    ui->customSessionOff->setStyleSheet("border-image: url(:/images/icons/customSession.svg)");
+//     ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSession.svg)");
+//     ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSession.svg)");
+//     ui->customSessionOff->setStyleSheet("border-image: url(:/images/icons/customSession.svg)");
 
-    ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
-    ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaOn.svg)");
-    ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaS.svg)");
+//     ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
+//     ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaOn.svg)");
+//     ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaS.svg)");
 
-    // change this to theta later
-    ui->deltaLabel_3->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
+//     // change this to theta later
+//     ui->deltaLabel_3->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
 
 
-}
+// }
 
 
 void MainWindow::navigateSessionGroups(){
