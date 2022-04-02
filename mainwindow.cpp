@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <QDebug>
+#include <random>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -9,13 +10,21 @@ MainWindow::MainWindow(QWidget *parent)
     deviceOn = false;
     batteryLvl = 1;
     blinkTimer = new QTimer(this);
+    connectionTimer = new QTimer(this);
+    connectionStatus = 1;
+    connectionCount = 0;
     blinkCount = 0;
     blinkingNum = 0;
+    leftEarConnected = false;
+    rightEarConnected = false;
     currentLabel = NULL;
     connect(blinkTimer, &QTimer::timeout, this, &MainWindow::blinkNumber);
+    connect(connectionTimer, &QTimer::timeout, this, &MainWindow::displayConnectionStatus);
     connect(ui->powerButton, &QPushButton::pressed, this, &MainWindow::startPowerTimer);
     connect(ui->powerButton, &QPushButton::released, this, &MainWindow::selectPowerAction);
-
+    connect(ui->leftEarButton, &QPushButton::released, this, &MainWindow::toggleLeftEarConnection);
+    connect(ui->rightEarButton, &QPushButton::released, this, &MainWindow::toggleRightEarConnection);
+    connect(ui->connectionTestButton, &QPushButton::released, this, &MainWindow::testConnection);
     // populate therapies
     // therapies[0] = new Therapy("MET", 0.5, 3.0);
     // therapies[1] = new Therapy("DELTA", 2.5, 5.0);
@@ -58,6 +67,8 @@ void MainWindow::togglePower(){
     else{
         ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/powerOff.svg)");
         deviceOn = false;
+        leftEarConnected = false;
+        rightEarConnected = false;
         hideBattery();
         hideLabels();
     }
@@ -144,8 +155,8 @@ void MainWindow::navigateSessionGroups(){
 //This function highlights parts of the number graph depending on the battery level of the device
 void MainWindow::displayBattery(){
     if(batteryLvl > 0 && batteryLvl < 12.5){
-//        ui->oneLabel->setStyleSheet("border-image: url(:/images/icons/One.svg)");
         blinkingNum = 1;
+        //calls blinkNumber() every 300 milliseconds
         blinkTimer->start(300);
     }
 
@@ -195,10 +206,11 @@ void MainWindow::hideBattery(){
 
 //This function changes the colour of all icons from grey to their respective colours
 void MainWindow::displayLabels(){
-    ui->rightEarLabel->setStyleSheet("border-image: url(:/images/icons/Right.svg)");
-    ui->leftEarLabel->setStyleSheet("border-image: url(:/images/icons/Left.svg)");
-    ui->leftConnectionLabel->setStyleSheet("border-image: url(:/images/icons/LeftConnection.svg)");
-    ui->rightConnectionLabel->setStyleSheet("border-image: url(:/images/icons/RightConnection.svg)");
+//    ui->rightEarButton->setStyleSheet("border-image: url(:/images/icons/Right.svg)");
+//    ui->leftEarButton->setStyleSheet("border-image: url(:/images/icons/Left.svg)");
+//    ui->leftConnectionLabel->setStyleSheet("border-image: url(:/images/icons/LeftConnection.svg)");
+//    ui->rightConnectionLabel->setStyleSheet("border-image: url(:/images/icons/RightConnection.svg)");
+    ui->tDCSLabel->setStyleSheet("color: rgba(255, 0, 0)");
     ui->zeroTwoFiveLabel->setStyleSheet("color: rgba(0, 255, 0)");
     ui->zeroFiveLabel->setStyleSheet("color: rgba(0, 255, 0)");
     ui->zeroSevenFiveLabel->setStyleSheet("color: rgba(0, 255, 0)");
@@ -211,10 +223,11 @@ void MainWindow::displayLabels(){
 
 //This function changes the colour of all icons from their respective colours to grey
 void MainWindow::hideLabels(){
-    ui->rightEarLabel->setStyleSheet("border-image: url(:/images/icons/RightOff.svg)");
-    ui->leftEarLabel->setStyleSheet("border-image: url(:/images/icons/LeftOff.svg)");
+    ui->rightEarButton->setStyleSheet("border-image: url(:/images/icons/RightOff.svg)");
+    ui->leftEarButton->setStyleSheet("border-image: url(:/images/icons/LeftOff.svg)");
     ui->leftConnectionLabel->setStyleSheet("border-image: url(:/images/icons/LeftConnectionOff.svg)");
     ui->rightConnectionLabel->setStyleSheet("border-image: url(:/images/icons/LeftConnectionOff.svg)");
+    ui->tDCSLabel->setStyleSheet("color: rgba(200, 200, 200)");
     ui->zeroTwoFiveLabel->setStyleSheet("color: rgba(200, 200, 200)");
     ui->zeroFiveLabel->setStyleSheet("color: rgba(200, 200, 200)");;
     ui->zeroSevenFiveLabel->setStyleSheet("color: rgba(200, 200, 200)");
@@ -290,3 +303,102 @@ void MainWindow::blinkNumber(){
     }
 }
 
+//This function switches the left ear icons on and off
+void MainWindow::toggleLeftEarConnection(){
+    if(!deviceOn){
+        return;
+    }
+
+    if(leftEarConnected){
+        ui->leftEarButton->setStyleSheet("border-image:url(:/images/icons/LeftOff.svg)");
+        ui->leftConnectionLabel->setStyleSheet("border-image: url(:/images/icons/LeftConnectionOff.svg)");
+        leftEarConnected = false;
+        connectionStatus = 1;
+    }
+
+    else{
+        ui->leftEarButton->setStyleSheet("border-image:url(:/images/icons/Left.svg)");
+        ui->leftConnectionLabel->setStyleSheet("border-image: url(:/images/icons/LeftConnection.svg)");
+        leftEarConnected = true;
+    }
+}
+
+//This function switches the right ear icons on and off
+void MainWindow::toggleRightEarConnection(){
+    if(!deviceOn){
+        return;
+    }
+
+    if(rightEarConnected){
+        ui->rightEarButton->setStyleSheet("border-image:url(:/images/icons/RightOff.svg)");
+        ui->rightConnectionLabel->setStyleSheet("border-image: url(:/images/icons/RightConnectionOff.svg)");
+        rightEarConnected = false;
+        connectionStatus = 1;
+    }
+
+    else{
+        ui->rightEarButton->setStyleSheet("border-image:url(:/images/icons/Right.svg)");
+        ui->rightConnectionLabel->setStyleSheet("border-image: url(:/images/icons/RightConnection.svg)");
+        rightEarConnected = true;
+    }
+}
+
+//This function displays the connection status of the ear clips
+void MainWindow::displayConnectionStatus(){
+    if(connectionCount >= 10){
+        connectionTimer->stop();
+        connectionCount = 0;
+        //After the connection status is displayed, grey out all numbers and display the battery again
+        hideBattery();
+        displayBattery();
+    }
+
+    else{
+        connectionCount++;
+        if(connectionStatus == 1){
+            if(connectionCount % 2 == 0){
+               ui->sevenLabel->setStyleSheet("border-image: url(:/images/icons/SevenFlashing.svg)");
+               ui->eightLabel->setStyleSheet("border-image: url(:/images/icons/EightFlashing.svg)");
+            }
+            else{
+                ui->sevenLabel->setStyleSheet("border-image: url(:/images/icons/Seven.svg)");
+                ui->eightLabel->setStyleSheet("border-image: url(:/images/icons/Eight.svg)");
+            }
+        }
+
+        else if(connectionStatus == 2){
+            ui->sixLabel->setStyleSheet("border-image: url(:/images/icons/Six.svg)");
+            ui->fiveLabel->setStyleSheet("border-image: url(:/images/icons/Five.svg)");
+            ui->fourLabel->setStyleSheet("border-image: url(:/images/icons/Four.svg)");
+        }
+
+        else if(connectionStatus == 3){
+            ui->oneLabel->setStyleSheet("border-image: url(:/images/icons/One.svg)");
+            ui->twoLabel->setStyleSheet("border-image: url(:/images/icons/Two.svg)");
+            ui->threeLabel->setStyleSheet("border-image: url(:/images/icons/Three.svg)");
+        }
+    }
+
+
+}
+
+//This function determines the connection status of the ear clips and displays it by starting the connectionTimer
+void MainWindow::testConnection(){
+    //Grey out all numbers because only a maximum of 3 numbers will be lit during the connection test
+    hideBattery();
+
+    //If only one ear is connected, the connection status is 1 (No Connection)
+    if(!leftEarConnected || !rightEarConnected){
+        connectionStatus = 1;
+
+    }
+
+    else{
+        //Connection status is assigned the value 2 (Okay Connection) or 3 (Excellent Connection) randomly
+        srand(time(NULL));
+        connectionStatus = (rand() % 2)+2;
+    }
+
+    //calls displayConnectionStatus() every 300ms
+    connectionTimer->start(300);
+}
