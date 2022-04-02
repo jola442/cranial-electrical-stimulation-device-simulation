@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Oasis Pro Simulation</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/images/overlay/OasisProSkeleton.svg</normaloff>:/images/overlay/OasisProSkeleton.svg</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -660,6 +664,8 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
