@@ -211,15 +211,6 @@ void MainWindow::navigateSessionGroups(){
             return;
         }
     }
-
-//    if (batteryLvl >= 12.5){
-
-//        else if(currentGroup == ui->customSessionLabel){
-//            ui->customSessionLabel->setStyleSheet("border-image: url(:/images/icons/CustomSessionOff.svg)");
-//            currentGroup = ui->fortyFiveLabel;
-//            displaySessionLabel(currentGroup);
-//        }
-//    }
  
 }
 
