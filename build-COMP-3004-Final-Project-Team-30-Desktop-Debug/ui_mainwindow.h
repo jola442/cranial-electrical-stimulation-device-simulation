@@ -10,6 +10,7 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QLabel>
@@ -31,11 +32,9 @@ public:
     QPushButton *downButton;
     QPushButton *tickButton;
     QLabel *intensityLabel;
-    QLabel *leftEarLabel;
-    QLabel *rightEarLabel;
     QLabel *leftConnectionLabel;
     QLabel *twentyMinsLabel;
-    QLabel *customSessionOff;
+    QLabel *customSessionLabel;
     QLabel *fortyFiveMinsLabel;
     QLabel *deltaLabel;
     QLabel *metLabel;
@@ -58,8 +57,11 @@ public:
     QLabel *plusOneLabel;
     QLabel *tDCSLabel;
     QLabel *rightConnectionLabel;
-    QLabel *deltaLabel_3;
+    QLabel *thetaLabel;
     QLabel *powerLabel;
+    QPushButton *leftEarButton;
+    QPushButton *rightEarButton;
+    QPushButton *connectionTestButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -67,7 +69,10 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(800, 600);
+        MainWindow->resize(806, 566);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/images/overlay/OasisProSkeleton.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        MainWindow->setWindowIcon(icon);
         MainWindow->setStyleSheet(QString::fromUtf8(""));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
@@ -103,28 +108,20 @@ public:
         font.setPointSize(25);
         intensityLabel->setFont(font);
         intensityLabel->setStyleSheet(QString::fromUtf8("color:yellow"));
-        leftEarLabel = new QLabel(centralwidget);
-        leftEarLabel->setObjectName(QString::fromUtf8("leftEarLabel"));
-        leftEarLabel->setGeometry(QRect(440, 130, 41, 21));
-        leftEarLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/LeftOff.svg)"));
-        rightEarLabel = new QLabel(centralwidget);
-        rightEarLabel->setObjectName(QString::fromUtf8("rightEarLabel"));
-        rightEarLabel->setGeometry(QRect(500, 130, 41, 21));
-        rightEarLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/RightOff.svg)"));
         leftConnectionLabel = new QLabel(centralwidget);
         leftConnectionLabel->setObjectName(QString::fromUtf8("leftConnectionLabel"));
         leftConnectionLabel->setGeometry(QRect(450, 110, 31, 16));
-        leftConnectionLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/leftConnectionOff.svg)\n"
+        leftConnectionLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/LeftConnectionOff.svg)\n"
 ""));
         twentyMinsLabel = new QLabel(centralwidget);
         twentyMinsLabel->setObjectName(QString::fromUtf8("twentyMinsLabel"));
         twentyMinsLabel->setGeometry(QRect(180, 150, 41, 31));
         twentyMinsLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/20minSessionOff.svg)\n"
 ""));
-        customSessionOff = new QLabel(centralwidget);
-        customSessionOff->setObjectName(QString::fromUtf8("customSessionOff"));
-        customSessionOff->setGeometry(QRect(300, 150, 41, 31));
-        customSessionOff->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/CustomSessionOff.svg)\n"
+        customSessionLabel = new QLabel(centralwidget);
+        customSessionLabel->setObjectName(QString::fromUtf8("customSessionLabel"));
+        customSessionLabel->setGeometry(QRect(300, 150, 41, 31));
+        customSessionLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/CustomSessionOff.svg)\n"
 ""));
         fortyFiveMinsLabel = new QLabel(centralwidget);
         fortyFiveMinsLabel->setObjectName(QString::fromUtf8("fortyFiveMinsLabel"));
@@ -238,20 +235,35 @@ public:
         rightConnectionLabel->setGeometry(QRect(510, 110, 31, 16));
         rightConnectionLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/RightConnectionOff.svg)\n"
 ""));
-        deltaLabel_3 = new QLabel(centralwidget);
-        deltaLabel_3->setObjectName(QString::fromUtf8("deltaLabel_3"));
-        deltaLabel_3->setGeometry(QRect(310, 200, 21, 21));
-        deltaLabel_3->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/ThetaOff.svg)\n"
+        thetaLabel = new QLabel(centralwidget);
+        thetaLabel->setObjectName(QString::fromUtf8("thetaLabel"));
+        thetaLabel->setGeometry(QRect(310, 200, 21, 21));
+        thetaLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/ThetaOff.svg)\n"
 ""));
         powerLabel = new QLabel(centralwidget);
         powerLabel->setObjectName(QString::fromUtf8("powerLabel"));
         powerLabel->setGeometry(QRect(520, 380, 41, 16));
         powerLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/powerOff.svg)\n"
 ""));
+        leftEarButton = new QPushButton(centralwidget);
+        leftEarButton->setObjectName(QString::fromUtf8("leftEarButton"));
+        leftEarButton->setGeometry(QRect(440, 130, 41, 21));
+        leftEarButton->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/LeftOff.svg)\n"
+"\n"
+""));
+        rightEarButton = new QPushButton(centralwidget);
+        rightEarButton->setObjectName(QString::fromUtf8("rightEarButton"));
+        rightEarButton->setGeometry(QRect(500, 130, 41, 21));
+        rightEarButton->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/RightOff.svg)\n"
+"\n"
+""));
+        connectionTestButton = new QPushButton(centralwidget);
+        connectionTestButton->setObjectName(QString::fromUtf8("connectionTestButton"));
+        connectionTestButton->setGeometry(QRect(20, 10, 131, 25));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 22));
+        menubar->setGeometry(QRect(0, 0, 806, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -264,17 +276,15 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Oasis Pro Simulation", nullptr));
         powerButton->setText(QString());
         upButton->setText(QString());
         downButton->setText(QString());
         tickButton->setText(QString());
         intensityLabel->setText(QApplication::translate("MainWindow", "INT", nullptr));
-        leftEarLabel->setText(QString());
-        rightEarLabel->setText(QString());
         leftConnectionLabel->setText(QString());
         twentyMinsLabel->setText(QString());
-        customSessionOff->setText(QString());
+        customSessionLabel->setText(QString());
         fortyFiveMinsLabel->setText(QString());
         deltaLabel->setText(QString());
         metLabel->setText(QString());
@@ -297,8 +307,11 @@ public:
         plusOneLabel->setText(QString());
         tDCSLabel->setText(QApplication::translate("MainWindow", "tDCS", nullptr));
         rightConnectionLabel->setText(QString());
-        deltaLabel_3->setText(QString());
+        thetaLabel->setText(QString());
         powerLabel->setText(QString());
+        leftEarButton->setText(QString());
+        rightEarButton->setText(QString());
+        connectionTestButton->setText(QApplication::translate("MainWindow", "connection test", nullptr));
     } // retranslateUi
 
 };
