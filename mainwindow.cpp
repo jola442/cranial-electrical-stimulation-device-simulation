@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     deviceOn = false;
-    batteryLvl = 1;
+    batteryLvl = 100;
     blinkTimer = new QTimer(this);
     connectionTimer = new QTimer(this);
     connectionStatus = 1;
@@ -128,6 +128,7 @@ void MainWindow::displaySessionLabel(QLabel* label){
 
 
 void MainWindow::lightUpGroups(){
+    if(!deviceOn){return;}
 
     if(currentSession == NULL){
         currentSession = ui->metLabel;
@@ -162,41 +163,63 @@ void MainWindow::lightUpGroups(){
 
 
 void MainWindow::navigateSessionGroups(){
+    if(!deviceOn){return;}
 
     if(batteryLvl >= 12.5){
 
         if(currentGroup == NULL){
             currentGroup = ui->twentyMinsLabel;
             displaySessionLabel(currentGroup);
+            return;
+        }
+
+        else if(currentGroup == ui->customSessionLabel){
+            ui->customSessionLabel->setStyleSheet("border-image: url(:/images/icons/CustomSessionOff.svg)");
+            currentGroup = ui->twentyMinsLabel;
+            displaySessionLabel(currentGroup);
+            return;
         }
     }
 
     if (batteryLvl >= 25){
-
         if(currentGroup == ui->twentyMinsLabel){
             ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
             currentGroup = ui->fortyFiveMinsLabel;
             displaySessionLabel(currentGroup);
+            return;
         }
     }
 
     if(batteryLvl > 0){
-
-        else if(currentGroup == ui->fortyFiveMinsLabel){
+        if(currentGroup == ui->fortyFiveMinsLabel){
             ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSessionOff.svg)");
-            currentGroup = ui->customSessionOff;
+            currentGroup = ui->customSessionLabel;
             displaySessionLabel(currentGroup);
+            return;
+        }
+
+        else if(currentGroup == ui->twentyMinsLabel){
+             ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
+             currentGroup = ui->customSessionLabel;
+             displaySessionLabel(currentGroup);
+             return;
+        }
+
+        else if(currentGroup == NULL){
+            currentGroup = ui->customSessionLabel;
+            displaySessionLabel(currentGroup);
+            return;
         }
     }
 
-    if (batteryLvl >= 12.5){
+//    if (batteryLvl >= 12.5){
 
-        else if(currentGroup == ui->customSessionOff){
-            ui->customSessionOff->setStyleSheet("border-image: url(:/images/icons/CustomSessionOff.svg)");
-            currentGroup = ui->twentyMinsLabel;
-            displaySessionLabel(currentGroup);
-        }
-    }
+//        else if(currentGroup == ui->customSessionLabel){
+//            ui->customSessionLabel->setStyleSheet("border-image: url(:/images/icons/CustomSessionOff.svg)");
+//            currentGroup = ui->fortyFiveLabel;
+//            displaySessionLabel(currentGroup);
+//        }
+//    }
  
 }
 
