@@ -17,8 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     blinkingNum = 0;
     leftEarConnected = false;
     rightEarConnected = false;
-    currentLabel = NULL;
     currentGroup = NULL;
+    currentSession = NULL;
     connect(blinkTimer, &QTimer::timeout, this, &MainWindow::blinkNumber);
     connect(connectionTimer, &QTimer::timeout, this, &MainWindow::displayConnectionStatus);
     connect(ui->powerButton, &QPushButton::pressed, this, &MainWindow::startPowerTimer);
@@ -125,17 +125,37 @@ void MainWindow::displaySessionLabel(QLabel* label){
 
 // battery for 20 min session -> at least 1 battery bar -> 12.5 percent
 // battery for 45 min session -> at least 2 battery bars -> 25 percent
-// 
+
 
 void MainWindow::lightUpGroups(){
 
-    if(currentGroup == NULL){
-        currentGroup = ui->metLabel;
+    if(currentSession == NULL){
+        currentSession = ui->metLabel;
         ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
     }
 
-    if(currentGroup == ui->metLabel){
-        currentGroup = ui->subDeltaLabel;
+    if(currentSession == ui->metLabel){
+        currentSession = ui->subDeltaLabel;
+        ui->metLabel->setStyleSheet("border-image: url(:/images/icons/METOff.svg)");
+        ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaS.svg)");
+
+    }
+
+    if(currentSession == ui->subDeltaLabel){
+        currentSession = ui->deltaLabel;
+        ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaSOff.svg)");
+        ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/Delta.svg)");
+    }
+
+    if(currentSession == ui->deltaLabel){
+        currentSession = ui->thetaLabel;
+        ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaOff.svg)");
+        ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
+    }
+    if(currentSession == ui->thetaLabel){
+        currentSession = ui->metLabel;
+        ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/ThetaOff.svg)");
+        ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
     }
     
 }
@@ -145,36 +165,36 @@ void MainWindow::navigateSessionGroups(){
 
     if(batteryLvl >= 12.5){
 
-        if(currentLabel == NULL){
-            currentLabel = ui->twentyMinsLabel;
-            displaySessionLabel(currentLabel);
+        if(currentGroup == NULL){
+            currentGroup = ui->twentyMinsLabel;
+            displaySessionLabel(currentGroup);
         }
     }
 
     if (batteryLvl >= 25){
 
-        if(currentLabel == ui->twentyMinsLabel){
+        if(currentGroup == ui->twentyMinsLabel){
             ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
-            currentLabel = ui->fortyFiveMinsLabel;
-            displaySessionLabel(currentLabel);
+            currentGroup = ui->fortyFiveMinsLabel;
+            displaySessionLabel(currentGroup);
         }
     }
 
     if(batteryLvl > 0){
 
-        else if(currentLabel == ui->fortyFiveMinsLabel){
+        else if(currentGroup == ui->fortyFiveMinsLabel){
             ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSessionOff.svg)");
-            currentLabel = ui->customSessionOff;
-            displaySessionLabel(currentLabel);
+            currentGroup = ui->customSessionOff;
+            displaySessionLabel(currentGroup);
         }
     }
 
     if (batteryLvl >= 12.5){
 
-        else if(currentLabel == ui->customSessionOff){
+        else if(currentGroup == ui->customSessionOff){
             ui->customSessionOff->setStyleSheet("border-image: url(:/images/icons/CustomSessionOff.svg)");
-            currentLabel = ui->twentyMinsLabel;
-            displaySessionLabel(currentLabel);
+            currentGroup = ui->twentyMinsLabel;
+            displaySessionLabel(currentGroup);
         }
     }
  
