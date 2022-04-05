@@ -31,6 +31,7 @@ private:
     int blinkCount;             //tracks how many times a number on the number graph has blinked
     int blinkingNum;            //the number that is being blinked (1-8)
     QLabel* currentLabel;
+    QLabel* currentGroup;
     void togglePower();
     void blinkNumber();
     void navigateSessionGroups();

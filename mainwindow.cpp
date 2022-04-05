@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     blinkCount = 0;
     blinkingNum = 0;
     currentLabel = NULL;
+    currentGroup = NULL;
     connect(blinkTimer, &QTimer::timeout, this, &MainWindow::blinkNumber);
     connect(ui->powerButton, &QPushButton::pressed, this, &MainWindow::startPowerTimer);
     connect(ui->powerButton, &QPushButton::released, this, &MainWindow::selectPowerAction);
@@ -113,32 +114,59 @@ void MainWindow::displaySessionLabel(QLabel* label){
 
 
 
+// battery for 20 min session -> at least 1 battery bar -> 12.5 percent
+// battery for 45 min session -> at least 2 battery bars -> 25 percent
+// 
+
+void MainWindow::lightUpGroups(){
+
+    if(currentGroup == NULL){
+        currentGroup = ui->metLabel;
+        ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
+    }
+
+    if(currentGroup == ui->metLabel){
+        currentGroup = ui->subDeltaLabel;
+    }
+    
+}
+
 
 void MainWindow::navigateSessionGroups(){
-    if(currentLabel == NULL){
-        currentLabel = ui->twentyMinsLabel;
-        displaySessionLabel(currentLabel);
+
+    if(batteryLvl >= 12.5){
+
+        if(currentLabel == NULL){
+            currentLabel = ui->twentyMinsLabel;
+            displaySessionLabel(currentLabel);
+        }
     }
 
+    if (batteryLvl >= 25){
 
-
-    if(currentLabel == ui->twentyMinsLabel){
-        ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
-        currentLabel = ui->fortyFiveMinsLabel;
-        displaySessionLabel(currentLabel);
+        if(currentLabel == ui->twentyMinsLabel){
+            ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
+            currentLabel = ui->fortyFiveMinsLabel;
+            displaySessionLabel(currentLabel);
+        }
     }
 
+    if(batteryLvl > 0){
 
-    else if(currentLabel == ui->fortyFiveMinsLabel){
-        ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSessionOff.svg)");
-        currentLabel = ui->customSessionOff;
-        displaySessionLabel(currentLabel);
+        else if(currentLabel == ui->fortyFiveMinsLabel){
+            ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSessionOff.svg)");
+            currentLabel = ui->customSessionOff;
+            displaySessionLabel(currentLabel);
+        }
     }
 
-    else if(currentLabel == ui->customSessionOff){
-        ui->customSessionOff->setStyleSheet("border-image: url(:/images/icons/CustomSessionOff.svg)");
-        currentLabel = ui->twentyMinsLabel;
-        displaySessionLabel(currentLabel);
+    if (batteryLvl >= 12.5){
+
+        else if(currentLabel == ui->customSessionOff){
+            ui->customSessionOff->setStyleSheet("border-image: url(:/images/icons/CustomSessionOff.svg)");
+            currentLabel = ui->twentyMinsLabel;
+            displaySessionLabel(currentLabel);
+        }
     }
 
 }
