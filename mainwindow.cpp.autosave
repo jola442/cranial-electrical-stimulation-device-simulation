@@ -19,8 +19,10 @@ MainWindow::MainWindow(QWidget *parent)
     rightEarConnected = false;
     currentLabel = NULL;
     ui->historyListWidget->setVisible(false);
-    connect(ui->upButton, &QPushButton::released, this, &MainWindow::navigateUpHistory);
-    connect(ui->downButton, &QPushButton::released, this, &MainWindow::navigateDownHistory);
+//Because a ui element can have only one slot (event handler) and the up and down buttons have multiple functions,
+//an event handler function with if statements is required. See selectPowerAction();
+//    connect(ui->upButton, &QPushButton::released, this, &MainWindow::navigateUpHistory);
+//    connect(ui->downButton, &QPushButton::released, this, &MainWindow::navigateDownHistory);
     connect(blinkTimer, &QTimer::timeout, this, &MainWindow::blinkNumber);
     connect(connectionTimer, &QTimer::timeout, this, &MainWindow::displayConnectionStatus);
     connect(ui->powerButton, &QPushButton::pressed, this, &MainWindow::startPowerTimer);
@@ -436,10 +438,6 @@ void MainWindow::displayHistory(){
 
 
 void MainWindow::navigateDownHistory(){
-//    if(ui->historyListWidget->currentRow() == -1){
-//        ui->historyListWidget->setCurrentRow(0);
-//    }
-
     int nextRow = ui->historyListWidget->currentRow()+1;
 
     //Wrap around to the first item in the list view
