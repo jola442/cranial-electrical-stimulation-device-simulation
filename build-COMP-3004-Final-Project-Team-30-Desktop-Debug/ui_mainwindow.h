@@ -14,6 +14,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -62,6 +63,8 @@ public:
     QPushButton *leftEarButton;
     QPushButton *rightEarButton;
     QPushButton *connectionTestButton;
+    QPushButton *historyButton;
+    QListWidget *historyListWidget;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -243,7 +246,7 @@ public:
         powerLabel = new QLabel(centralwidget);
         powerLabel->setObjectName(QString::fromUtf8("powerLabel"));
         powerLabel->setGeometry(QRect(520, 380, 41, 16));
-        powerLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/powerOff.svg)\n"
+        powerLabel->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/PowerOff.svg)\n"
 ""));
         leftEarButton = new QPushButton(centralwidget);
         leftEarButton->setObjectName(QString::fromUtf8("leftEarButton"));
@@ -260,6 +263,21 @@ public:
         connectionTestButton = new QPushButton(centralwidget);
         connectionTestButton->setObjectName(QString::fromUtf8("connectionTestButton"));
         connectionTestButton->setGeometry(QRect(20, 10, 131, 25));
+        historyButton = new QPushButton(centralwidget);
+        historyButton->setObjectName(QString::fromUtf8("historyButton"));
+        historyButton->setGeometry(QRect(450, 160, 91, 31));
+        historyButton->setStyleSheet(QString::fromUtf8("color:rgb(200,200,200);\n"
+"border:none;\n"
+"font-size: 20px"));
+        historyListWidget = new QListWidget(centralwidget);
+        historyListWidget->setObjectName(QString::fromUtf8("historyListWidget"));
+        historyListWidget->setGeometry(QRect(220, 240, 181, 201));
+        historyListWidget->setStyleSheet(QString::fromUtf8("background-color: rgb(50, 50 , 50);\n"
+"color: rgb(200, 200, 200);\n"
+"selection-background-color: rgb(150, 150, 0)"));
+        historyListWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        historyListWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        historyListWidget->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -312,6 +330,7 @@ public:
         leftEarButton->setText(QString());
         rightEarButton->setText(QString());
         connectionTestButton->setText(QApplication::translate("MainWindow", "connection test", nullptr));
+        historyButton->setText(QApplication::translate("MainWindow", "HISTORY", nullptr));
     } // retranslateUi
 
 };

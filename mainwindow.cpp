@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     leftEarConnected = false;
     rightEarConnected = false;
     currentLabel = NULL;
+    ui->historyListWidget->setVisible(false);
     connect(blinkTimer, &QTimer::timeout, this, &MainWindow::blinkNumber);
     connect(connectionTimer, &QTimer::timeout, this, &MainWindow::displayConnectionStatus);
     connect(ui->powerButton, &QPushButton::pressed, this, &MainWindow::startPowerTimer);
@@ -25,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->leftEarButton, &QPushButton::released, this, &MainWindow::toggleLeftEarConnection);
     connect(ui->rightEarButton, &QPushButton::released, this, &MainWindow::toggleRightEarConnection);
     connect(ui->connectionTestButton, &QPushButton::released, this, &MainWindow::testConnection);
+    connect(ui->historyButton, &QPushButton::released, this, &MainWindow::displayHistory);
     // populate therapies
     // therapies[0] = new Therapy("MET", 0.5, 3.0);
     // therapies[1] = new Therapy("DELTA", 2.5, 5.0);
@@ -57,7 +59,7 @@ void MainWindow::selectPowerAction(){
 void MainWindow::togglePower(){
     if(!deviceOn){
         if(batteryLvl > 0){
-            ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/powerOn.svg)");
+            ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/Power.svg)");
             deviceOn = true;
             displayBattery();
             displayLabels();
@@ -65,7 +67,7 @@ void MainWindow::togglePower(){
     }
 
     else{
-        ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/powerOff.svg)");
+        ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/PowerOff.svg)");
         deviceOn = false;
         leftEarConnected = false;
         rightEarConnected = false;
@@ -210,6 +212,9 @@ void MainWindow::displayLabels(){
 //    ui->leftEarButton->setStyleSheet("border-image: url(:/images/icons/Left.svg)");
 //    ui->leftConnectionLabel->setStyleSheet("border-image: url(:/images/icons/LeftConnection.svg)");
 //    ui->rightConnectionLabel->setStyleSheet("border-image: url(:/images/icons/RightConnection.svg)");
+    ui->historyButton->setStyleSheet("color:rgb(0,255,0);"
+                                     "border:none;"
+                                     "font-size: 20px");
     ui->tDCSLabel->setStyleSheet("color: rgba(255, 0, 0)");
     ui->zeroTwoFiveLabel->setStyleSheet("color: rgba(0, 255, 0)");
     ui->zeroFiveLabel->setStyleSheet("color: rgba(0, 255, 0)");
@@ -223,10 +228,13 @@ void MainWindow::displayLabels(){
 
 //This function changes the colour of all icons from their respective colours to grey
 void MainWindow::hideLabels(){
+    ui->historyButton->setStyleSheet("color:rgb(200,200,200);"
+                                     "border:none;"
+                                     "font-size: 20px");
     ui->rightEarButton->setStyleSheet("border-image: url(:/images/icons/RightOff.svg)");
     ui->leftEarButton->setStyleSheet("border-image: url(:/images/icons/LeftOff.svg)");
     ui->leftConnectionLabel->setStyleSheet("border-image: url(:/images/icons/LeftConnectionOff.svg)");
-    ui->rightConnectionLabel->setStyleSheet("border-image: url(:/images/icons/LeftConnectionOff.svg)");
+    ui->rightConnectionLabel->setStyleSheet("border-image: url(:/images/icons/RightConnectionOff.svg)");
     ui->tDCSLabel->setStyleSheet("color: rgba(200, 200, 200)");
     ui->zeroTwoFiveLabel->setStyleSheet("color: rgba(200, 200, 200)");
     ui->zeroFiveLabel->setStyleSheet("color: rgba(200, 200, 200)");;
@@ -401,4 +409,43 @@ void MainWindow::testConnection(){
 
     //calls displayConnectionStatus() every 300ms
     connectionTimer->start(300);
+}
+
+void MainWindow::displayHistory(){
+    if(!ui->historyListWidget->isVisible()){
+        ui->historyButton->setText("HOME");
+        ui->historyListWidget->setVisible(true);
+    }
+
+    else{
+        ui->historyButton->setText("HISTORY");
+        ui->historyListWidget->setVisible(false);
+    }
+
+
+    for(int i = 0; i < 5; ++i){
+        QListWidgetItem* testWidgetItem = new QListWidgetItem();
+//        testWidgetItem->setBackground(QColor(200,200,200));
+        testWidgetItem->setText("Date: 08/26/2001\n Session Type: MET\n Duration: 30:00\n Intensity Level: 8");
+        ui->historyListWidget->addItem(testWidgetItem);
+    }
+
+}
+
+
+void MainWindow::navigateUpHistory(){
+    int nextRow = ui->historyListWidget->currentRow()+1;
+    if(nextRow > ui->historyListWidget->count()){
+        nextRow = ui->historyListWidget->count()-1;
+    }
+    ui->historyListWidget->setCurrentRow(nextRow);
+}
+
+void MainWindow::navigateDownHistory(){
+    int nextRow = ui->historyListWidget->currentRow()-1;
+
+    if(nextRow < 0){
+        nextRow = 0;
+    }
+    ui->historyListWidget->setCurrentRow(nextRow);
 }

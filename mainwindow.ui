@@ -612,7 +612,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image:url(:/images/icons/powerOff.svg)
+     <string notr="true">border-image:url(:/images/icons/PowerOff.svg)
 </string>
     </property>
     <property name="text">
@@ -666,6 +666,48 @@
     </property>
     <property name="text">
      <string>connection test</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="historyButton">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>160</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:rgb(200,200,200);
+border:none;
+font-size: 20px</string>
+    </property>
+    <property name="text">
+     <string>HISTORY</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="historyListWidget">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>240</y>
+      <width>181</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(50, 50 , 50);
+color: rgb(200, 200, 200);
+selection-background-color: rgb(150, 150, 0)</string>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustToContents</enum>
     </property>
    </widget>
   </widget>
