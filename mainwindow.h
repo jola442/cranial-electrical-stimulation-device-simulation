@@ -26,6 +26,7 @@ private:
     void hideBattery();
     void displayLabels();
     void hideLabels();
+    void hideSessionLabels();
     QElapsedTimer powerTimer;   //tracks how long the powerButton is pressed
     QTimer* blinkTimer;         //regulates how long a number is blinked for
     QTimer* connectionTimer;    //regulates how long the connection status is displayed
@@ -43,9 +44,9 @@ private:
     void displaySessionLabel(QLabel* label);
     void testConnection();
     void displayConnectionStatus();
+    void navigateUpHistory();
+    void navigateDownHistory();
     void lightUpGroups();
-
-
 
     // Therapy* therapies[MAX_THERAPY_COUNT];
 
@@ -54,5 +55,6 @@ private slots:
     void selectPowerAction();
     void toggleLeftEarConnection();
     void toggleRightEarConnection();
+    void displayHistory();
 };
 #endif // MAINWINDOW_H
