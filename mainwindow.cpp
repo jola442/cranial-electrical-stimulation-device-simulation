@@ -17,15 +17,11 @@ MainWindow::MainWindow(QWidget *parent)
     blinkingNum = 0;
     leftEarConnected = false;
     rightEarConnected = false;
-<<<<<<< HEAD
-    currentLabel = NULL;
     ui->historyListWidget->setVisible(false);
-    connect(ui->upButton, &QPushButton::released, this, &MainWindow::navigateUpHistory);
-    connect(ui->downButton, &QPushButton::released, this, &MainWindow::navigateDownHistory);
-=======
     currentGroup = NULL;
     currentSession = NULL;
->>>>>>> 53795e9a79ca817826b5a7a1a6ffc07cb05c8fde
+//    connect(ui->upButton, &QPushButton::released, this, &MainWindow::navigateUpHistory);
+//    connect(ui->downButton, &QPushButton::released, this, &MainWindow::navigateDownHistory);
     connect(blinkTimer, &QTimer::timeout, this, &MainWindow::blinkNumber);
     connect(connectionTimer, &QTimer::timeout, this, &MainWindow::displayConnectionStatus);
     connect(ui->powerButton, &QPushButton::pressed, this, &MainWindow::startPowerTimer);
