@@ -35,7 +35,8 @@ private:
     int blinkingNum;            //the number that is being blinked (1-8)
     bool leftEarConnected;      //whether the left ear is connected or not
     bool rightEarConnected;     //whether the right ear is connected or not
-    QLabel* currentLabel;
+    QLabel* currentGroup;
+    QLabel* currentSession;
     void togglePower();
     void blinkNumber();
     void navigateSessionGroups();
@@ -44,7 +45,7 @@ private:
     void displayConnectionStatus();
     void navigateUpHistory();
     void navigateDownHistory();
-
+    void lightUpGroups();
 
     // Therapy* therapies[MAX_THERAPY_COUNT];
 

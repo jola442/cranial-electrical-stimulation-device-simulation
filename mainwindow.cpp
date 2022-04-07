@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     deviceOn = false;
-    batteryLvl = 1;
+    batteryLvl = 100;
     blinkTimer = new QTimer(this);
     connectionTimer = new QTimer(this);
     connectionStatus = 1;
@@ -17,10 +17,15 @@ MainWindow::MainWindow(QWidget *parent)
     blinkingNum = 0;
     leftEarConnected = false;
     rightEarConnected = false;
+<<<<<<< HEAD
     currentLabel = NULL;
     ui->historyListWidget->setVisible(false);
     connect(ui->upButton, &QPushButton::released, this, &MainWindow::navigateUpHistory);
     connect(ui->downButton, &QPushButton::released, this, &MainWindow::navigateDownHistory);
+=======
+    currentGroup = NULL;
+    currentSession = NULL;
+>>>>>>> 53795e9a79ca817826b5a7a1a6ffc07cb05c8fde
     connect(blinkTimer, &QTimer::timeout, this, &MainWindow::blinkNumber);
     connect(connectionTimer, &QTimer::timeout, this, &MainWindow::displayConnectionStatus);
     connect(ui->powerButton, &QPushButton::pressed, this, &MainWindow::startPowerTimer);
@@ -126,34 +131,95 @@ void MainWindow::displaySessionLabel(QLabel* label){
 
 
 
+// battery for 20 min session -> at least 1 battery bar -> 12.5 percent
+// battery for 45 min session -> at least 2 battery bars -> 25 percent
+
+
+void MainWindow::lightUpGroups(){
+    if(!deviceOn){return;}
+
+    if(currentSession == NULL){
+        currentSession = ui->metLabel;
+        ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
+    }
+
+    if(currentSession == ui->metLabel){
+        currentSession = ui->subDeltaLabel;
+        ui->metLabel->setStyleSheet("border-image: url(:/images/icons/METOff.svg)");
+        ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaS.svg)");
+
+    }
+
+    if(currentSession == ui->subDeltaLabel){
+        currentSession = ui->deltaLabel;
+        ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaSOff.svg)");
+        ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/Delta.svg)");
+    }
+
+    if(currentSession == ui->deltaLabel){
+        currentSession = ui->thetaLabel;
+        ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaOff.svg)");
+        ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
+    }
+    if(currentSession == ui->thetaLabel){
+        currentSession = ui->metLabel;
+        ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/ThetaOff.svg)");
+        ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
+    }
+    
+}
+
 
 void MainWindow::navigateSessionGroups(){
-    if(currentLabel == NULL){
-        currentLabel = ui->twentyMinsLabel;
-        displaySessionLabel(currentLabel);
+    if(!deviceOn){return;}
+
+    if(batteryLvl >= 12.5){
+
+        if(currentGroup == NULL){
+            currentGroup = ui->twentyMinsLabel;
+            displaySessionLabel(currentGroup);
+            return;
+        }
+
+        else if(currentGroup == ui->customSessionLabel){
+            ui->customSessionLabel->setStyleSheet("border-image: url(:/images/icons/CustomSessionOff.svg)");
+            currentGroup = ui->twentyMinsLabel;
+            displaySessionLabel(currentGroup);
+            return;
+        }
     }
 
-
-
-    if(currentLabel == ui->twentyMinsLabel){
-        ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
-        currentLabel = ui->fortyFiveMinsLabel;
-        displaySessionLabel(currentLabel);
+    if (batteryLvl >= 25){
+        if(currentGroup == ui->twentyMinsLabel){
+            ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
+            currentGroup = ui->fortyFiveMinsLabel;
+            displaySessionLabel(currentGroup);
+            return;
+        }
     }
 
+    if(batteryLvl > 0){
+        if(currentGroup == ui->fortyFiveMinsLabel){
+            ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSessionOff.svg)");
+            currentGroup = ui->customSessionLabel;
+            displaySessionLabel(currentGroup);
+            return;
+        }
 
-    else if(currentLabel == ui->fortyFiveMinsLabel){
-        ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSessionOff.svg)");
-        currentLabel = ui->customSessionLabel;
-        displaySessionLabel(currentLabel);
+        else if(currentGroup == ui->twentyMinsLabel){
+             ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
+             currentGroup = ui->customSessionLabel;
+             displaySessionLabel(currentGroup);
+             return;
+        }
+
+        else if(currentGroup == NULL){
+            currentGroup = ui->customSessionLabel;
+            displaySessionLabel(currentGroup);
+            return;
+        }
     }
-
-    else if(currentLabel == ui->customSessionLabel){
-        ui->customSessionLabel->setStyleSheet("border-image: url(:/images/icons/CustomSessionOff.svg)");
-        currentLabel = ui->twentyMinsLabel;
-        displaySessionLabel(currentLabel);
-    }
-
+ 
 }
 
 //This function highlights parts of the number graph depending on the battery level of the device
