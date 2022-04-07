@@ -475,7 +475,7 @@ void MainWindow::testConnection(){
     connectionTimer->start(300);
 }
 
-//This function displays the history of treatments and changes to the text of the historyButton
+//This function displays the history of treatments and changes the text of the historyButton
 //from "HISTORY" to "HOME" and vice versa when appropriate
 void MainWindow::displayHistory(){
     if(!ui->historyListWidget->isVisible()){
