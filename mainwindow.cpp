@@ -76,6 +76,7 @@ void MainWindow::togglePower(){
         rightEarConnected = false;
         hideBattery();
         hideLabels();
+        hideSessionLabels();
     }
 
 
@@ -109,21 +110,20 @@ void MainWindow::displaySessionLabel(QLabel* label){
 //     ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
 // }
 
-// void mainwindow:: hideSessionLabels(){
+ void MainWindow:: hideSessionLabels(){
 
-//     ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSession.svg)");
-//     ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSession.svg)");
-//     ui->customSessionLabel->setStyleSheet("border-image: url(:/images/icons/customSession.svg)");
+     ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
+     ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSessionOff.svg)");
+     ui->customSessionLabel->setStyleSheet("border-image: url(:/images/icons/CustomSessionOff.svg)");
 
-//     ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
-//     ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaOn.svg)");
-//     ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaS.svg)");
+     ui->metLabel->setStyleSheet("border-image: url(:/images/icons/METOff.svg)");
+     ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaOff.svg)");
+     ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaSOff.svg)");
 
-//     // change this to theta later
-//     ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
+     ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/ThetaOff.svg)");
 
 
-// }
+ }
 
 
 
@@ -420,6 +420,7 @@ void MainWindow::displayConnectionStatus(){
     if(connectionCount >= 10){
         connectionTimer->stop();
         connectionCount = 0;
+
         //After the connection status is displayed, grey out all numbers and display the battery again
         hideBattery();
         displayBattery();
@@ -475,7 +476,7 @@ void MainWindow::testConnection(){
     connectionTimer->start(300);
 }
 
-//This function displays the history of treatments and changes to the text of the historyButton
+//This function displays the history of treatments and changes the text of the historyButton
 //from "HISTORY" to "HOME" and vice versa when appropriate
 void MainWindow::displayHistory(){
     if(!ui->historyListWidget->isVisible()){

@@ -26,6 +26,7 @@ private:
     void hideBattery();
     void displayLabels();
     void hideLabels();
+    void hideSessionLabels();
     QElapsedTimer powerTimer;   //tracks how long the powerButton is pressed
     QTimer* blinkTimer;         //regulates how long a number is blinked for
     QTimer* connectionTimer;    //regulates how long the connection status is displayed
