@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     deviceOn = false;
-    batteryLvl = 100;
+    batteryLvl = 10;
     blinkTimer = new QTimer(this);
     connectionTimer = new QTimer(this);
     connectionStatus = 1;
