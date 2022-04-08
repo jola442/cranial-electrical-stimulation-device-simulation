@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QtWidgets>
 
+#include "session.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -47,6 +48,9 @@ private:
     void navigateUpHistory();
     void navigateDownHistory();
     void lightUpGroups();
+    Session session;
+    int operation; //1 is to select session, 2 is to select intensity, 3 is to go up and down in history
+    void showIntensity(int);
 
     // Therapy* therapies[MAX_THERAPY_COUNT];
 
@@ -56,5 +60,7 @@ private slots:
     void toggleLeftEarConnection();
     void toggleRightEarConnection();
     void displayHistory();
+    void assignSession(int);
+    void sessionOff();
 };
 #endif // MAINWINDOW_H

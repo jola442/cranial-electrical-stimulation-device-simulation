@@ -1,19 +1,19 @@
 #ifndef SESSION_H
 #define SESSION_H
 
-#include "defs.h"
 
+typedef enum {META, SUBDELTA, DELTA, THETA,NON} sessionNumType;
 class Session {
 
     public:
-    Session();
-    ~Session();
-    void selectGroup();
-    int selectSessionNum(groupType group);
+    	Session();
+    	int increaseIntensity();
+    	int decreaseIntensity();
+        int nextSession();
+        int previousSession();
     
     private:
-    groupType selectedGroup;
-    int userDesignedSessionTime;
-
+    	int intensity;
+        sessionNumType type;
 };
 #endif

@@ -2,13 +2,16 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <random>
+#include <iostream>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    operation = 1;
     ui->setupUi(this);
     deviceOn = false;
-    batteryLvl = 100;
+    batteryLvl = 70;
     blinkTimer = new QTimer(this);
     connectionTimer = new QTimer(this);
     connectionStatus = 1;
@@ -20,8 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->historyListWidget->setVisible(false);
     currentGroup = NULL;
     currentSession = NULL;
-//    connect(ui->upButton, &QPushButton::released, this, &MainWindow::navigateUpHistory);
-//    connect(ui->downButton, &QPushButton::released, this, &MainWindow::navigateDownHistory);
+    connect(ui->upButton, &QPushButton::released, this, &MainWindow::navigateUpHistory);
+    connect(ui->downButton, &QPushButton::released, this, &MainWindow::navigateDownHistory);
     connect(blinkTimer, &QTimer::timeout, this, &MainWindow::blinkNumber);
     connect(connectionTimer, &QTimer::timeout, this, &MainWindow::displayConnectionStatus);
     connect(ui->powerButton, &QPushButton::pressed, this, &MainWindow::startPowerTimer);
@@ -136,35 +139,43 @@ void MainWindow::lightUpGroups(){
 
     if(currentSession == NULL){
         currentSession = ui->metLabel;
+        sessionOff();
         ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
     }
 
-    if(currentSession == ui->metLabel){
+    else if(currentSession == ui->metLabel){
         currentSession = ui->subDeltaLabel;
-        ui->metLabel->setStyleSheet("border-image: url(:/images/icons/METOff.svg)");
+        sessionOff();
         ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaS.svg)");
 
     }
 
-    if(currentSession == ui->subDeltaLabel){
+    else if(currentSession == ui->subDeltaLabel){
         currentSession = ui->deltaLabel;
-        ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaSOff.svg)");
+        sessionOff();
         ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/Delta.svg)");
     }
 
-    if(currentSession == ui->deltaLabel){
+    else if(currentSession == ui->deltaLabel){
         currentSession = ui->thetaLabel;
-        ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaOff.svg)");
+        sessionOff();
         ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
     }
-    if(currentSession == ui->thetaLabel){
+    else if(currentSession == ui->thetaLabel){
         currentSession = ui->metLabel;
-        ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/ThetaOff.svg)");
+        sessionOff();
         ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
     }
     
 }
+void MainWindow::sessionOff()
+{
+    ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/ThetaOff.svg)");
+    ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaOff.svg)");
+    ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaSOff.svg)");
+    ui->metLabel->setStyleSheet("border-image: url(:/images/icons/METOff.svg)");
 
+}
 
 void MainWindow::navigateSessionGroups(){
     if(!deviceOn){return;}
@@ -482,11 +493,13 @@ void MainWindow::displayHistory(){
     if(!ui->historyListWidget->isVisible()){
         ui->historyButton->setText("HOME");
         ui->historyListWidget->setVisible(true);
+        operation = 3;
     }
 
     else{
         ui->historyButton->setText("HISTORY");
         ui->historyListWidget->setVisible(false);
+        operation=1;
     }
 
 
@@ -499,23 +512,126 @@ void MainWindow::displayHistory(){
 }
 
 //This function moves the current history list selection one down
-void MainWindow::navigateDownHistory(){
-    int nextRow = ui->historyListWidget->currentRow()+1;
 
-    //Wrap around to the first item in the list view
-    if(nextRow >= ui->historyListWidget->count()){
-        nextRow = 0;
+//they are still working when the oasis is powered off, we need to correct that
+//
+//
+//
+//
+//
+//
+void MainWindow::navigateDownHistory(){
+    if(operation ==3 ) //navigate history
+    {
+
+
+        int nextRow = ui->historyListWidget->currentRow()+1;
+
+        //Wrap around to the first item in the list view
+        if(nextRow >= ui->historyListWidget->count()){
+            nextRow = 0;
+        }
+        ui->historyListWidget->setCurrentRow(nextRow);
+     }
+
+    else if (operation ==2) //navigate intensity
+    {
+        int temp = session.decreaseIntensity();
+        showIntensity(temp);
     }
-    ui->historyListWidget->setCurrentRow(nextRow);
+
+    else //navigate sessions
+    {
+        assignSession(session.previousSession());
+        lightUpGroups();
+    }
 }
 
 //This function moves the current history list selection one up
 void MainWindow::navigateUpHistory(){
-    int nextRow = ui->historyListWidget->currentRow()-1;
 
-    //Wrap around to the last item in the list view
-    if(nextRow < 0){
-        nextRow = ui->historyListWidget->count()-1;
+
+    if(operation ==3 ) //for navigating history
+    {
+
+
+        int nextRow = ui->historyListWidget->currentRow()-1;
+
+        //Wrap around to the last item in the list view
+        if(nextRow < 0){
+            nextRow = ui->historyListWidget->count()-1;
+        }
+        ui->historyListWidget->setCurrentRow(nextRow);
+     }
+
+    else if (operation ==2) //in case for intensity
+    {
+        int temp = session.increaseIntensity();
+        showIntensity(temp);
+
     }
-    ui->historyListWidget->setCurrentRow(nextRow);
+
+    else //to naviagte sessions
+    {
+        assignSession(session.nextSession());
+        lightUpGroups();
+    }
+}
+
+
+void MainWindow::showIntensity(int inten)
+{
+    hideBattery();
+    switch (inten) {
+    case 1:
+        ui->oneLabel->setStyleSheet("border-image: url(:/images/icons/One.svg)");
+        break;
+    case 2:
+        ui->twoLabel->setStyleSheet("border-image: url(:/images/icons/Two.svg)");
+        break;
+    case 3:
+        ui->threeLabel->setStyleSheet("border-image: url(:/images/icons/Three.svg)");
+        break;
+    case 4:
+        ui->fourLabel->setStyleSheet("border-image: url(:/images/icons/Four.svg)");
+        break;
+    case 5:
+        ui->fiveLabel->setStyleSheet("border-image: url(:/images/icons/Five.svg)");
+        break;
+    case 6:
+        ui->sixLabel->setStyleSheet("border-image: url(:/images/icons/Six.svg)");
+        break;
+    case 7:
+        ui->sevenLabel->setStyleSheet("border-image: url(:/images/icons/Seven.svg)");
+        break;
+    case 8:
+        ui->eightLabel->setStyleSheet("border-image: url(:/images/icons/Eight.svg)");
+        break;
+    default:
+        break;
+    }
+
+}
+
+void MainWindow::assignSession(int num)
+{
+    switch(num){
+    case 0:
+        currentSession = ui->thetaLabel;
+        break;
+    case 1:
+        currentSession = ui->metLabel;
+        break;
+    case 2:
+        currentSession = ui->subDeltaLabel;
+        break;
+    case 3:
+        currentSession = ui->deltaLabel;
+        break;
+    default:
+        currentSession = ui->metLabel;
+        break;
+    }
+
+
 }
