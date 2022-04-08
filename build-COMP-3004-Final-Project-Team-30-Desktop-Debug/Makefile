@@ -53,10 +53,12 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../main.cpp \
-		../mainwindow.cpp qrc_resources.cpp \
+		../mainwindow.cpp \
+		../session.cpp qrc_resources.cpp \
 		moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
+		session.o \
 		qrc_resources.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -135,8 +137,10 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../../COMP-3004-Final-Project-Team-30.pro ../mainwindow.h ../main.cpp \
-		../mainwindow.cpp
+		../../COMP-3004-Final-Project-Team-30.pro ../mainwindow.h \
+		../session.h ../main.cpp \
+		../mainwindow.cpp \
+		../session.cpp
 QMAKE_TARGET  = COMP-3004-Final-Project-Team-30
 DESTDIR       = 
 TARGET        = COMP-3004-Final-Project-Team-30
@@ -321,8 +325,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../mainwindow.h ../session.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../session.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../mainwindow.ui $(DISTDIR)/
 
 
@@ -431,6 +435,7 @@ compiler_moc_header_make_all: moc_mainwindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp
 moc_mainwindow.cpp: ../mainwindow.h \
+		../session.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/COMP-3004-Final-Project-Team-30/build-COMP-3004-Final-Project-Team-30-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/COMP-3004-Final-Project-Team-30 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../mainwindow.h -o moc_mainwindow.cpp
@@ -456,12 +461,17 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-main.o: ../main.cpp ../mainwindow.h
+main.o: ../main.cpp ../mainwindow.h \
+		../session.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../main.cpp
 
 mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
+		../session.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../mainwindow.cpp
+
+session.o: ../session.cpp ../session.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o session.o ../session.cpp
 
 qrc_resources.o: qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
