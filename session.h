@@ -11,6 +11,7 @@ class Session {
     	int decreaseIntensity();
         int nextSession();
         int previousSession();
+        void setType(sessionNumType newType);
     
     private:
     	int intensity;

@@ -23,8 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->historyListWidget->setVisible(false);
     currentGroup = NULL;
     currentSession = NULL;
-    connect(ui->upButton, &QPushButton::released, this, &MainWindow::navigateUpHistory);
-    connect(ui->downButton, &QPushButton::released, this, &MainWindow::navigateDownHistory);
+    connect(ui->upButton, &QPushButton::released, this, &MainWindow::selectUpButtonAction);
+    connect(ui->downButton, &QPushButton::released, this, &MainWindow::selectDownButtonAction);
     connect(blinkTimer, &QTimer::timeout, this, &MainWindow::blinkNumber);
     connect(connectionTimer, &QTimer::timeout, this, &MainWindow::displayConnectionStatus);
     connect(ui->powerButton, &QPushButton::pressed, this, &MainWindow::startPowerTimer);
@@ -77,6 +77,9 @@ void MainWindow::togglePower(){
         deviceOn = false;
         leftEarConnected = false;
         rightEarConnected = false;
+        currentGroup = NULL;
+        currentSession = NULL;
+        session.setType(NON);
         hideBattery();
         hideLabels();
         hideSessionLabels();
@@ -490,6 +493,10 @@ void MainWindow::testConnection(){
 //This function displays the history of treatments and changes the text of the historyButton
 //from "HISTORY" to "HOME" and vice versa when appropriate
 void MainWindow::displayHistory(){
+    if(!deviceOn){
+        return;
+    }
+
     if(!ui->historyListWidget->isVisible()){
         ui->historyButton->setText("HOME");
         ui->historyListWidget->setVisible(true);
@@ -511,16 +518,9 @@ void MainWindow::displayHistory(){
 
 }
 
-//This function moves the current history list selection one down
+//This function determines what functionality downButton will have
+void MainWindow::selectDownButtonAction(){
 
-//they are still working when the oasis is powered off, we need to correct that
-//
-//
-//
-//
-//
-//
-void MainWindow::navigateDownHistory(){
     if(operation ==3 ) //navigate history
     {
 
@@ -542,13 +542,16 @@ void MainWindow::navigateDownHistory(){
 
     else //navigate sessions
     {
-        assignSession(session.previousSession());
-        lightUpGroups();
+        if(currentGroup != NULL){
+            assignSession(session.previousSession());
+            lightUpGroups();
+        }
+
     }
 }
 
-//This function moves the current history list selection one up
-void MainWindow::navigateUpHistory(){
+//This function determines what functionality upButton will have
+void MainWindow::selectUpButtonAction(){
 
 
     if(operation ==3 ) //for navigating history
@@ -573,8 +576,11 @@ void MainWindow::navigateUpHistory(){
 
     else //to naviagte sessions
     {
-        assignSession(session.nextSession());
-        lightUpGroups();
+        if(currentGroup != NULL){
+            assignSession(session.nextSession());
+            lightUpGroups();
+        }
+
     }
 }
 

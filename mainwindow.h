@@ -45,8 +45,8 @@ private:
     void displaySessionLabel(QLabel* label);
     void testConnection();
     void displayConnectionStatus();
-    void navigateUpHistory();
-    void navigateDownHistory();
+    void selectUpButtonAction();
+    void selectDownButtonAction();
     void lightUpGroups();
     Session session;
     int operation; //1 is to select session, 2 is to select intensity, 3 is to go up and down in history

@@ -79,3 +79,7 @@ int Session::previousSession()
     //cout<<type<<endl;
     return type;
 }
+
+void Session::setType(sessionNumType newType){
+    type = newType;
+}
