@@ -19,14 +19,24 @@ public:
     ~MainWindow();
 
 private:
-    Ui::MainWindow *ui;
-    float batteryLvl;   //the battery level of the device
-    bool deviceOn;      //whether the device is on or off
     void displayBattery();
     void hideBattery();
     void displayLabels();
     void hideLabels();
     void hideSessionLabels();
+    void togglePower();
+    void blinkNumber();
+    void navigateSessionGroups();
+    void displaySessionLabel(QLabel* label);
+    void testConnection();
+    void displayConnectionStatus();
+    void navigateUpHistory();
+    void navigateDownHistory();
+    void lightUpGroups();
+
+    Ui::MainWindow *ui;
+    float batteryLvl;   //the battery level of the device
+    bool deviceOn;      //whether the device is on or off
     QElapsedTimer powerTimer;   //tracks how long the powerButton is pressed
     QTimer* blinkTimer;         //regulates how long a number is blinked for
     QTimer* connectionTimer;    //regulates how long the connection status is displayed
@@ -38,15 +48,6 @@ private:
     bool rightEarConnected;     //whether the right ear is connected or not
     QLabel* currentGroup;
     QLabel* currentSession;
-    void togglePower();
-    void blinkNumber();
-    void navigateSessionGroups();
-    void displaySessionLabel(QLabel* label);
-    void testConnection();
-    void displayConnectionStatus();
-    void navigateUpHistory();
-    void navigateDownHistory();
-    void lightUpGroups();
 
     // Therapy* therapies[MAX_THERAPY_COUNT];
 
