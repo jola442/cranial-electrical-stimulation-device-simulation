@@ -1,31 +1,81 @@
 #include "session.h"
+#include <iostream>
 
-void session::selectGroup() {
+using namespace std;
+Session::Session()
+{
+    intensity = 0;
+    type = NON;
+}
 
-    // also need to accommodate the group lit icon.
+int Session::increaseIntensity()
+{
+    if(intensity<8)
+    {
+        intensity = intensity +1;
+        //cout<<intensity<<endl;
+    }
+    return intensity;
+}
 
-    // Press power button to select group
-    if(selectedGroup == 2) { // last group type
-        selectedGroup = 0;
-    } else if (selectedGroup < 2) {
-        selectedGroup++;
 
+int Session::decreaseIntensity()
+{
+    if(intensity>0)
+    {
+        intensity = intensity - 1;
+        //cout<<intensity<<endl;
     }
 
-    if (selectedGroup == 2) {
-        // take input as QT
-        // Save input in userDesignedSessionTime
-        // Display that on the page
-        // .typedQTInput = userDesignedSessionTime;
-        
+    return intensity;
+}
+
+
+int Session::nextSession()
+{
+    if(type == META)
+    {
+        type = SUBDELTA;
     }
 
-    // whenver power button is pressed and released, group type will change
-    // .onClickPower is just a temporary function, here you have to add the UI
+    else if(type == SUBDELTA)
+    {
+        type = DELTA;
+    }
 
+    else if(type == DELTA)
+    {
+        type = THETA;
+    }
+    else
+    {
+        type = META;
+    }
+    //cout<<type<<endl;
+    return type;
+}
 
+int Session::previousSession()
+{
+    if(type == META)
+    {
+        type = THETA;
+    }
 
-void session::selectSessionNum(groupType group) {
+    else if(type == THETA)
+    {
+        type = DELTA;
+    }
 
-   // whenver a certain group is selected, the session 
+    else if(type == DELTA)
+    {
+        type = SUBDELTA;
+    }
+    else
+    {
+        type = META;
+    }
+
+    //cout<<type<<endl;
+    return type;
 }

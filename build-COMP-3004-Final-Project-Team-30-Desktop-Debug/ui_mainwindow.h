@@ -232,7 +232,7 @@ public:
         tDCSLabel->setObjectName(QString::fromUtf8("tDCSLabel"));
         tDCSLabel->setGeometry(QRect(330, 250, 54, 17));
         tDCSLabel->setFont(font1);
-        tDCSLabel->setStyleSheet(QString::fromUtf8("color:red"));
+        tDCSLabel->setStyleSheet(QString::fromUtf8("color:rgb(200, 200, 200)"));
         rightConnectionLabel = new QLabel(centralwidget);
         rightConnectionLabel->setObjectName(QString::fromUtf8("rightConnectionLabel"));
         rightConnectionLabel->setGeometry(QRect(510, 110, 31, 16));
