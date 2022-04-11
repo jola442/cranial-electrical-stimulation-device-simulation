@@ -6,6 +6,7 @@ Session::Session()
 {
     intensity = 0;
     type = NON;
+    duration = 0;
 }
 
 int Session::increaseIntensity()
@@ -33,7 +34,7 @@ int Session::decreaseIntensity()
 
 int Session::nextSession()
 {
-    if(type == META)
+    if(type == MET)
     {
         type = SUBDELTA;
     }
@@ -49,7 +50,7 @@ int Session::nextSession()
     }
     else
     {
-        type = META;
+        type = MET;
     }
     //cout<<type<<endl;
     return type;
@@ -57,7 +58,7 @@ int Session::nextSession()
 
 int Session::previousSession()
 {
-    if(type == META)
+    if(type == MET)
     {
         type = THETA;
     }
@@ -73,7 +74,7 @@ int Session::previousSession()
     }
     else
     {
-        type = META;
+        type = MET;
     }
 
     //cout<<type<<endl;
@@ -82,4 +83,17 @@ int Session::previousSession()
 
 void Session::setType(sessionNumType newType){
     type = newType;
+}
+
+sessionNumType Session::getType(){
+    return type;
+}
+
+float Session::getDuration(){
+    return duration;
+}
+
+
+int Session::getIntensity(){
+    return intensity;
 }

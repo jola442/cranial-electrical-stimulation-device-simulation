@@ -7,6 +7,8 @@
 #include <QtWidgets>
 
 #include "session.h"
+#define BATTERY_DRAIN 0.026
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -28,7 +30,7 @@ private:
     void displayLabels();
     void hideLabels();
     void hideSessionLabels();
-    QElapsedTimer powerTimer;   //tracks how long the powerButton is pressed
+    QElapsedTimer powerTimer;   //how long the powerButton is pressed
     QTimer* blinkTimer;         //regulates how long a number is blinked for
     QTimer* connectionTimer;    //regulates how long the connection status is displayed
     int connectionStatus;       //1.No Connection 2. Okay Connection. 3. Excellent Connection
@@ -37,6 +39,7 @@ private:
     int blinkingNum;            //the number that is being blinked (1-8)
     bool leftEarConnected;      //whether the left ear is connected or not
     bool rightEarConnected;     //whether the right ear is connected or not
+    bool sessionInProgress;     //whether the user is currently being treated or not
     QLabel* currentGroup;
     QLabel* currentSession;
     void togglePower();
@@ -48,11 +51,18 @@ private:
     void selectUpButtonAction();
     void selectDownButtonAction();
     void lightUpGroups();
-    Session session;
+    void startSession();
+    void powerOff();
+    void powerOn();
+    Session* session;
+    QVector <Session*> savedSessions;
     int operation; //1 is to select session, 2 is to select intensity, 3 is to go up and down in history
     void showIntensity(int);
-
-    // Therapy* therapies[MAX_THERAPY_COUNT];
+//    int nextSession();
+//    int previousSession();
+    void assignSession(int);
+    void sessionOff();
+    void drainBattery(Session* ses);
 
 private slots:
     void startPowerTimer();
@@ -60,7 +70,6 @@ private slots:
     void toggleLeftEarConnection();
     void toggleRightEarConnection();
     void displayHistory();
-    void assignSession(int);
-    void sessionOff();
+    void confirmSelection();
 };
 #endif // MAINWINDOW_H
