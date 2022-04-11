@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <random>
 #include <iostream>
+#include <string>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -18,13 +19,14 @@ MainWindow::MainWindow(QWidget *parent)
     connectionCount = 0;
     blinkCount = 0;
     blinkingNum = 0;
+    type = NON;
     leftEarConnected = false;
     rightEarConnected = false;
     sessionInProgress = false;
     ui->historyListWidget->setVisible(false);
     currentGroup = NULL;
     currentSession = NULL;
-    session = new Session();
+    session = NULL;
     connect(ui->tickButton, &QPushButton::released, this, &MainWindow::confirmSelection);
     connect(ui->upButton, &QPushButton::released, this, &MainWindow::selectUpButtonAction);
     connect(ui->downButton, &QPushButton::released, this, &MainWindow::selectDownButtonAction);
@@ -41,19 +43,19 @@ MainWindow::~MainWindow()
 {
     delete ui;
 
-    for(int i = 0; i < savedSessions.size(); ++i){
-        delete savedSessions[i];
+    if(session != NULL){
+        delete session;
     }
 }
 
 //This function starts the timer that measures how long the powerButton is clicked for
 void MainWindow::startPowerTimer(){
-    powerTimer.start();
+    deviceTimer.start();
 }
 
 //This function determines the action of the power button depending on how long it is clicked for
 void MainWindow::selectPowerAction(){
-    if(powerTimer.elapsed() > 500){
+    if(deviceTimer.elapsed() > 500){
         togglePower();
     }
 
@@ -81,6 +83,7 @@ void MainWindow::togglePower(){
 
 }
 
+//This function resets the state of the device. It is called when the device is turned off.
 void MainWindow::powerOff(){
     ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/PowerOff.svg)");
     ui->historyListWidget->setVisible(false);
@@ -90,18 +93,24 @@ void MainWindow::powerOff(){
     rightEarConnected = false;
     currentGroup = NULL;
     currentSession = NULL;
-    session->setType(NON);
     blinkTimer->stop();
     hideBattery();
     hideLabels();
     hideSessionLabels();
 
-//    if(session->duration == 0){
-//        session->duration = powerTimer.elapsed();
-//        drainBattery(session);
-//    }
+    if(session != NULL){
+        if(session->getDuration() == 0){
+            session->setDuration((float)deviceTimer.elapsed()/1000/60);
+        }
+        saveSession(session);
+        session->setType(NON);
+        drainBattery(session);
+
+    }
+
 }
 
+//This function is called when the device is turned on
 void MainWindow::powerOn(){
     deviceOn = true;
     operation = 1;
@@ -348,6 +357,7 @@ void MainWindow::hideLabels(){
 }
 
 //This function causes the label corresponding to blinkingNum to blink
+//If the user has chosen a session group and number, this function calls testConnection()
 void MainWindow::blinkNumber(){
     if(blinkingNum == 0){
         return;
@@ -540,28 +550,22 @@ void MainWindow::displayHistory(){
 
     if(sessionInProgress){
         operation = 2;
+        return;
     }
 
-    else if(!ui->historyListWidget->isVisible()){
+    else if(ui->historyListWidget->isVisible()){
+        ui->historyButton->setText("HISTORY");
+        ui->historyListWidget->setVisible(false);
+        operation=1;
+
+    }
+
+    else{
         ui->historyButton->setText("HOME");
         ui->historyListWidget->setVisible(true);
         operation = 3;
     }
 
-    else{
-        ui->historyButton->setText("HISTORY");
-        ui->historyListWidget->setVisible(false);
-        operation=1;
-    }
-
-    for(int i = 0; i < savedSessions.size(); ++i){
-        sessionNumType type = savedSessions.at(i)->getType();
-        float dur = savedSessions.at(i)->getDuration();
-        int inten = savedSessions.at(i)->getIntensity();
-        QListWidgetItem* testWidgetItem = new QListWidgetItem();
-        testWidgetItem->setText(QString("Date: 08/26/200%1\n Session Type: %2\n Duration: %3\n Intensity Level: %4").arg(i).arg(type).arg(dur).arg(inten));
-        ui->historyListWidget->addItem(testWidgetItem);
-    }
 
 }
 
@@ -594,7 +598,7 @@ void MainWindow::selectDownButtonAction(){
     else //navigate sessions
     {
         if(currentGroup != NULL){
-            assignSession(session->previousSession());
+            assignSession(previousSession());
             lightUpGroups();
         }
 
@@ -631,7 +635,7 @@ void MainWindow::selectUpButtonAction(){
     else //to naviagte sessions
     {
         if(currentGroup != NULL){
-            assignSession(session->nextSession());
+            assignSession(nextSession());
             lightUpGroups();
         }
 
@@ -696,6 +700,7 @@ void MainWindow::assignSession(int num)
 
 }
 
+//This function blinks the current session number
 void MainWindow::confirmSelection(){
     if(currentSession == NULL){
         return;
@@ -706,20 +711,22 @@ void MainWindow::confirmSelection(){
 
 
     hideBattery();
-    blinkingNum = session->getType()+1;
+    blinkingNum = type+1;
     blinkTimer->start(300);
 }
 
+//This function initializes a session based on the user's choices and starts timers for the session
 void MainWindow::startSession(){
+    session = new Session();
     sessionInProgress = true;
     operation = 2;
 
     if(currentGroup == ui->twentyMinsLabel){
-        session->duration = 20;
+        session->setDuration(20);
     }
 
     else if(currentGroup == ui->fortyFiveMinsLabel){
-        session->duration = 45;
+        session->setDuration(45);
     }
 
     QTimer* t = new QTimer(this);
@@ -727,7 +734,6 @@ void MainWindow::startSession(){
     connect(t, &QTimer::timeout, [=]{
         ui->tickButton->blockSignals(false);
         sessionInProgress = false;
-        savedSessions.push_back(session);
         drainBattery(session);
         t->stop();
         powerOff();
@@ -736,15 +742,96 @@ void MainWindow::startSession(){
     ui->tickButton->blockSignals(true);
 
 
-    if(session->duration == 20 || session->duration == 45){
-        t->start(session->duration*1000);
+    if(session->getDuration() == 20 || session->getDuration() == 45){
+        //session times are displayed as minutes but last for seconds
+        //converting duration from seconds to milliseconds
+        t->start(session->getDuration()*1000);
     }
 
     else{
-        powerTimer.start();
+        deviceTimer.start();
     }
 }
 
+//This function depletes the device's battery after a session ends
 void MainWindow::drainBattery(Session* ses){
     batteryLvl -= (BATTERY_DRAIN * connectionStatus * ses->getIntensity() * ses->getDuration());
+}
+
+//This function records a session
+void MainWindow::saveSession(Session* ses){
+        QString sessionString;
+        if(currentSession == ui->metLabel){
+            session->setType(MET);
+            sessionString = "MET";
+        }
+
+        else if(currentSession == ui->subDeltaLabel){
+            session->setType(SUBDELTA);
+            sessionString = "SUBDELTA";
+        }
+
+        else if(currentSession == ui->deltaLabel){
+            session->setType(DELTA);
+            sessionString = "DELTA";
+        }
+
+        else{
+            session->setType(THETA);
+            sessionString = "THETA";
+        }
+
+        int inten = ses->getIntensity();
+        QString date = QDateTime::currentDateTime().toString("ddd MMMM d yyyy");
+        QListWidgetItem* sessionWidget = new QListWidgetItem();
+        QString dur = QDateTime::fromTime_t(ses->getDuration()*60).toUTC().toString("hh:mm:ss");
+        sessionWidget->setText(QString("Date: %1\n Session Type: %2\n Duration: %3\n Intensity Level: %4").arg(date).arg(sessionString).arg(dur).arg(inten));
+        ui->historyListWidget->addItem(sessionWidget);
+}
+
+int MainWindow::nextSession(){
+    if(type == MET)
+    {
+        type = SUBDELTA;
+    }
+
+    else if(type == SUBDELTA)
+    {
+        type = DELTA;
+    }
+
+    else if(type == DELTA)
+    {
+        type = THETA;
+    }
+    else
+    {
+        type = MET;
+    }
+    //cout<<type<<endl;
+    return type;
+}
+
+int MainWindow::previousSession(){
+    if(type == MET)
+    {
+        type = THETA;
+    }
+
+    else if(type == THETA)
+    {
+        type = DELTA;
+    }
+
+    else if(type == DELTA)
+    {
+        type = SUBDELTA;
+    }
+    else
+    {
+        type = MET;
+    }
+
+    //cout<<type<<endl;
+    return type;
 }

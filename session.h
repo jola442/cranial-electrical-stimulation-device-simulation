@@ -9,16 +9,17 @@ class Session {
         Session();
         int increaseIntensity();
         int decreaseIntensity();
-        int nextSession();
-        int previousSession();
-        float duration;
+//        int nextSession();
+//        int previousSession();
         void setType(sessionNumType newType);
         sessionNumType getType();
         float getDuration();
         int getIntensity();
+        void setDuration(float dur);
 
     private:
         int intensity;
         sessionNumType type;
+        float duration;
 };
 #endif

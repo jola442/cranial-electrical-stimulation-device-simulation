@@ -62,7 +62,6 @@ public:
     QLabel *powerLabel;
     QPushButton *leftEarButton;
     QPushButton *rightEarButton;
-    QPushButton *connectionTestButton;
     QPushButton *historyButton;
     QListWidget *historyListWidget;
     QMenuBar *menubar;
@@ -260,9 +259,6 @@ public:
         rightEarButton->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/RightOff.svg)\n"
 "\n"
 ""));
-        connectionTestButton = new QPushButton(centralwidget);
-        connectionTestButton->setObjectName(QString::fromUtf8("connectionTestButton"));
-        connectionTestButton->setGeometry(QRect(20, 10, 131, 25));
         historyButton = new QPushButton(centralwidget);
         historyButton->setObjectName(QString::fromUtf8("historyButton"));
         historyButton->setGeometry(QRect(450, 160, 91, 31));
@@ -329,7 +325,6 @@ public:
         powerLabel->setText(QString());
         leftEarButton->setText(QString());
         rightEarButton->setText(QString());
-        connectionTestButton->setText(QApplication::translate("MainWindow", "connection test", nullptr));
         historyButton->setText(QApplication::translate("MainWindow", "HISTORY", nullptr));
     } // retranslateUi
 
