@@ -2,19 +2,24 @@
 #define SESSION_H
 
 
-typedef enum {META, SUBDELTA, DELTA, THETA,NON} sessionNumType;
+typedef enum {MET, SUBDELTA, DELTA, THETA,NON} sessionNumType;
 class Session {
 
     public:
-    	Session();
-    	int increaseIntensity();
-    	int decreaseIntensity();
-        int nextSession();
-        int previousSession();
+        Session();
+        int increaseIntensity();
+        int decreaseIntensity();
+//        int nextSession();
+//        int previousSession();
         void setType(sessionNumType newType);
-    
+        sessionNumType getType();
+        float getDuration();
+        int getIntensity();
+        void setDuration(float dur);
+
     private:
-    	int intensity;
+        int intensity;
         sessionNumType type;
+        float duration;
 };
 #endif

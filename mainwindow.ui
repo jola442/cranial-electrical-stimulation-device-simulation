@@ -655,19 +655,6 @@
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="connectionTestButton">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>131</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>connection test</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="historyButton">
     <property name="geometry">
      <rect>

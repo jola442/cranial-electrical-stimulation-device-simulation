@@ -4,8 +4,9 @@
 using namespace std;
 Session::Session()
 {
-    intensity = 0;
+    intensity = 1;
     type = NON;
+    duration = 0;
 }
 
 int Session::increaseIntensity()
@@ -31,55 +32,72 @@ int Session::decreaseIntensity()
 }
 
 
-int Session::nextSession()
-{
-    if(type == META)
-    {
-        type = SUBDELTA;
-    }
+//int Session::nextSession()
+//{
+//    if(type == MET)
+//    {
+//        type = SUBDELTA;
+//    }
 
-    else if(type == SUBDELTA)
-    {
-        type = DELTA;
-    }
+//    else if(type == SUBDELTA)
+//    {
+//        type = DELTA;
+//    }
 
-    else if(type == DELTA)
-    {
-        type = THETA;
-    }
-    else
-    {
-        type = META;
-    }
-    //cout<<type<<endl;
-    return type;
-}
+//    else if(type == DELTA)
+//    {
+//        type = THETA;
+//    }
+//    else
+//    {
+//        type = MET;
+//    }
+//    //cout<<type<<endl;
+//    return type;
+//}
 
-int Session::previousSession()
-{
-    if(type == META)
-    {
-        type = THETA;
-    }
+//int Session::previousSession()
+//{
+//    if(type == MET)
+//    {
+//        type = THETA;
+//    }
 
-    else if(type == THETA)
-    {
-        type = DELTA;
-    }
+//    else if(type == THETA)
+//    {
+//        type = DELTA;
+//    }
 
-    else if(type == DELTA)
-    {
-        type = SUBDELTA;
-    }
-    else
-    {
-        type = META;
-    }
+//    else if(type == DELTA)
+//    {
+//        type = SUBDELTA;
+//    }
+//    else
+//    {
+//        type = MET;
+//    }
 
-    //cout<<type<<endl;
-    return type;
-}
+//    //cout<<type<<endl;
+//    return type;
+//}
 
 void Session::setType(sessionNumType newType){
     type = newType;
+}
+
+sessionNumType Session::getType(){
+    return type;
+}
+
+float Session::getDuration(){
+    return duration;
+}
+
+void Session::setDuration(float dur){
+    duration = dur;
+}
+
+
+int Session::getIntensity(){
+    return intensity;
 }
