@@ -15,8 +15,10 @@ MainWindow::MainWindow(QWidget *parent)
     batteryLvl = 70;
     blinkTimer = new QTimer(this);
     connectionTimer = new QTimer(this);
+    sessionTimer = new QTimer(this);
     connectionStatus = 1;
     connectionCount = 0;
+    sessionTimerCount = 0;
     blinkCount = 0;
     blinkingNum = 0;
     type = NON;
@@ -26,12 +28,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->historyListWidget->setVisible(false);
     currentGroup = NULL;
     currentSession = NULL;
-    session = NULL;
+    session = new Session();
     connect(ui->tickButton, &QPushButton::released, this, &MainWindow::confirmSelection);
     connect(ui->upButton, &QPushButton::released, this, &MainWindow::selectUpButtonAction);
     connect(ui->downButton, &QPushButton::released, this, &MainWindow::selectDownButtonAction);
     connect(blinkTimer, &QTimer::timeout, this, &MainWindow::blinkNumber);
     connect(connectionTimer, &QTimer::timeout, this, &MainWindow::displayConnectionStatus);
+    connect(sessionTimer, &QTimer::timeout, this, &MainWindow::updateSessionTimerCount);
     connect(ui->powerButton, &QPushButton::pressed, this, &MainWindow::startPowerTimer);
     connect(ui->powerButton, &QPushButton::released, this, &MainWindow::selectPowerAction);
     connect(ui->leftEarButton, &QPushButton::released, this, &MainWindow::toggleLeftEarConnection);
@@ -42,20 +45,17 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-
-    if(session != NULL){
-        delete session;
-    }
+    delete session;
 }
 
 //This function starts the timer that measures how long the powerButton is clicked for
 void MainWindow::startPowerTimer(){
-    deviceTimer.start();
+    powerTimer.start();
 }
 
 //This function determines the action of the power button depending on how long it is clicked for
 void MainWindow::selectPowerAction(){
-    if(deviceTimer.elapsed() > 500){
+    if(powerTimer.elapsed() > 500){
         togglePower();
     }
 
@@ -94,18 +94,29 @@ void MainWindow::powerOff(){
     currentGroup = NULL;
     currentSession = NULL;
     blinkTimer->stop();
+    connectionTimer->stop();
+    blinkCount = 0;
+    connectionCount = 0;
     hideBattery();
     hideLabels();
     hideSessionLabels();
 
     if(session != NULL){
-        if(session->getDuration() == 0){
-            session->setDuration((float)deviceTimer.elapsed()/1000/60);
+        if(session->getDuration() == 1){
+            session->setDuration(sessionTimerCount);
         }
-        saveSession(session);
-        session->setType(NON);
-        drainBattery(session);
 
+        //for 20 and 45 minute sessions, the battery is drained at once
+        else{
+            drainBattery();
+        }
+
+        saveSession();
+        type = NON;
+        sessionTimerCount = 0;
+        session->setDuration(0);
+        session->setIntensity(0);
+        session->setType(NON);
     }
 
 }
@@ -488,7 +499,6 @@ void MainWindow::displayConnectionStatus(){
         else{
             startSession();
         }
-//        displayBattery();
     }
 
     else{
@@ -717,7 +727,6 @@ void MainWindow::confirmSelection(){
 
 //This function initializes a session based on the user's choices and starts timers for the session
 void MainWindow::startSession(){
-    session = new Session();
     sessionInProgress = true;
     operation = 2;
 
@@ -729,37 +738,43 @@ void MainWindow::startSession(){
         session->setDuration(45);
     }
 
-    QTimer* t = new QTimer(this);
+    //Set the custom session's duration to 1 so it can be drained every second
+    else{
+        session->setDuration(1);
+    }
+    sessionTimer->start(1000);
+}
 
-    connect(t, &QTimer::timeout, [=]{
-        ui->tickButton->blockSignals(false);
-        sessionInProgress = false;
-        drainBattery(session);
-        t->stop();
+
+//This function is called by the sessionTimer every second. It counts how long the session has lasted and it determines whether to turn off device or leave it on.
+void MainWindow::updateSessionTimerCount(){
+    if(batteryLvl <= 1){
+        sessionTimer->stop();
         powerOff();
-    });
+    }
 
-    ui->tickButton->blockSignals(true);
-
-
+    ++sessionTimerCount;
     if(session->getDuration() == 20 || session->getDuration() == 45){
-        //session times are displayed as minutes but last for seconds
-        //converting duration from seconds to milliseconds
-        t->start(session->getDuration()*1000);
+        if(sessionTimerCount == session->getDuration()){
+            sessionTimer->stop();
+            powerOff();
+        }
     }
 
     else{
-        deviceTimer.start();
+        drainBattery();
     }
+
+
 }
 
-//This function depletes the device's battery after a session ends
-void MainWindow::drainBattery(Session* ses){
-    batteryLvl -= (BATTERY_DRAIN * connectionStatus * ses->getIntensity() * ses->getDuration());
+//This function depletes the device's battery according to the connection strength, duration and intensity of the active session
+void MainWindow::drainBattery(){
+    batteryLvl -= (BATTERY_DRAIN * connectionStatus * session->getIntensity() * session->getDuration());
 }
 
 //This function records a session
-void MainWindow::saveSession(Session* ses){
+void MainWindow::saveSession(){
         QString sessionString;
         if(currentSession == ui->metLabel){
             session->setType(MET);
@@ -781,10 +796,11 @@ void MainWindow::saveSession(Session* ses){
             sessionString = "THETA";
         }
 
-        int inten = ses->getIntensity();
+        int inten = session->getIntensity();
         QString date = QDateTime::currentDateTime().toString("ddd MMMM d yyyy");
         QListWidgetItem* sessionWidget = new QListWidgetItem();
-        QString dur = QDateTime::fromTime_t(ses->getDuration()*60).toUTC().toString("hh:mm:ss");
+        //Time recorded is in seconds, multiply by 60 to get a minutes representation
+        QString dur = QDateTime::fromTime_t(session->getDuration()*60).toUTC().toString("hh:mm:ss");
         sessionWidget->setText(QString("Date: %1\n Session Type: %2\n Duration: %3\n Intensity Level: %4").arg(date).arg(sessionString).arg(dur).arg(inten));
         ui->historyListWidget->addItem(sessionWidget);
 }

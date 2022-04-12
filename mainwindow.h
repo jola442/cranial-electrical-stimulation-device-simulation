@@ -34,13 +34,15 @@ private:
     void displayLabels();
     void hideLabels();
     void hideSessionLabels();
-    QElapsedTimer deviceTimer;   //measures how long the powerButton is pressed and how long a custom session lasts
+    QTimer* sessionTimer;       //measures and keeps track of how long a session is
+    QElapsedTimer powerTimer;   //measures how long the powerButton is pressed
     QTimer* blinkTimer;         //regulates how long a number is blinked for
     QTimer* connectionTimer;    //regulates how long the connection status is displayed
     int connectionStatus;       //1.No Connection 2. Okay Connection. 3. Excellent Connection
     int blinkCount;             //how long a number has blinked for (blinkCount * blinkTimer->interval)
     int connectionCount;        //how long connection status has been displayed for (connectionCount * connectionTimer->interval)
     int blinkingNum;            //the number that is being blinked (1-8)
+    int sessionTimerCount;      //how many seconds the current session has lasted
     bool leftEarConnected;      //whether the left ear is connected or not
     bool rightEarConnected;     //whether the right ear is connected or not
     bool sessionInProgress;     //whether the user is currently being treated or not
@@ -59,13 +61,13 @@ private:
     void startSession();
     void powerOff();
     void powerOn();
-    Session* session;
+    Session* session;           //the active session
     int operation; //1 is to select session, 2 is to select intensity, 3 is to go up and down in history
     void showIntensity(int);
     void assignSession(int);
     void sessionOff();
-    void drainBattery(Session* ses);
-    void saveSession(Session* ses);
+    void drainBattery();
+    void saveSession();
     int previousSession();
     int nextSession();
 
@@ -76,5 +78,6 @@ private slots:
     void toggleRightEarConnection();
     void displayHistory();
     void confirmSelection();
+    void updateSessionTimerCount();
 };
 #endif // MAINWINDOW_H
