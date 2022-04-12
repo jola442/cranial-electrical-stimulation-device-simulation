@@ -16,6 +16,7 @@ class Session {
         float getDuration();
         int getIntensity();
         void setDuration(float dur);
+        void setIntensity(int inten);
 
     private:
         int intensity;

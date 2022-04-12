@@ -97,6 +97,9 @@ void Session::setDuration(float dur){
     duration = dur;
 }
 
+void Session::setIntensity(int inten){
+    intensity = inten;
+}
 
 int Session::getIntensity(){
     return intensity;

@@ -93,11 +93,13 @@ public:
         upButton->setGeometry(QRect(410, 330, 61, 51));
         upButton->setStyleSheet(QString::fromUtf8("border-image:url(:/images/buttons/upButton.svg)\n"
 ""));
+        upButton->setAutoRepeat(true);
         downButton = new QPushButton(centralwidget);
         downButton->setObjectName(QString::fromUtf8("downButton"));
         downButton->setGeometry(QRect(410, 400, 61, 51));
         downButton->setStyleSheet(QString::fromUtf8("border-image:url(:/images/buttons/downButton.svg)\n"
 ""));
+        downButton->setAutoRepeat(true);
         tickButton = new QPushButton(centralwidget);
         tickButton->setObjectName(QString::fromUtf8("tickButton"));
         tickButton->setGeometry(QRect(150, 400, 61, 51));
@@ -268,9 +270,9 @@ public:
         historyListWidget = new QListWidget(centralwidget);
         historyListWidget->setObjectName(QString::fromUtf8("historyListWidget"));
         historyListWidget->setGeometry(QRect(220, 240, 181, 201));
-        historyListWidget->setStyleSheet(QString::fromUtf8("background-color: rgb(50, 50 , 50);\n"
-"color: rgb(200, 200, 200);\n"
-"selection-background-color: rgb(150, 150, 0)"));
+        historyListWidget->setStyleSheet(QString::fromUtf8("background-color: rgb(50, 50, 50);\n"
+"selection-background-color: rgb(150, 150, 0);\n"
+"color: rgb(200,200,200);"));
         historyListWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         historyListWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         historyListWidget->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);

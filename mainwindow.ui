@@ -68,6 +68,9 @@
     <property name="text">
      <string/>
     </property>
+    <property name="autoRepeat">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="downButton">
     <property name="geometry">
@@ -84,6 +87,9 @@
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="autoRepeat">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="tickButton">
@@ -683,9 +689,9 @@ font-size: 20px</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(50, 50 , 50);
-color: rgb(200, 200, 200);
-selection-background-color: rgb(150, 150, 0)</string>
+     <string notr="true">background-color: rgb(50, 50, 50);
+selection-background-color: rgb(150, 150, 0);
+color: rgb(200,200,200);</string>
     </property>
     <property name="verticalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
