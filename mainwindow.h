@@ -27,13 +27,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    float batteryLvl;   //the battery level of the device
-    bool deviceOn;      //whether the device is on or off
-    void displayBattery();
-    void hideBattery();
-    void displayLabels();
-    void hideLabels();
-    void hideSessionLabels();
+    float batteryLvl;           //the battery level of the device
+    bool deviceOn;              //whether the device is on or off
     QTimer* sessionTimer;       //measures and keeps track of how long a session is
     QElapsedTimer powerTimer;   //measures how long the powerButton is pressed
     QTimer* blinkTimer;         //regulates how long a number is blinked for
@@ -48,24 +43,30 @@ private:
     bool sessionInProgress;     //whether the user is currently being treated or not
     QLabel* currentGroup;
     QLabel* currentSession;
+    Session* session;           //the active session
+    int operation; //1 is to select session, 2 is to select intensity, 3 is to go up and down in history
     sessionNumType type;        //the session type of the session the user wants to create
+    void displayBattery();
+    void hideBattery();
+    void displayLabels();
+    void hideLabels();
+    void hideSessionLabels();
     void togglePower();
     void blinkNumber();
     void navigateSessionGroups();
-    void displaySessionLabel(QLabel* label);
+    void displaySessionGroup(QLabel* label);
     void testConnection();
     void displayConnectionStatus();
     void selectUpButtonAction();
     void selectDownButtonAction();
-    void lightUpGroups();
+    void displaySession();
     void startSession();
     void powerOff();
     void powerOn();
-    Session* session;           //the active session
-    int operation; //1 is to select session, 2 is to select intensity, 3 is to go up and down in history
     void showIntensity(int);
     void assignSession(int);
-    void sessionOff();
+    void hideGroupAndSessionLabels();
+    void hideSessionTypeLabels();
     void drainBattery();
     void saveSession();
     int previousSession();

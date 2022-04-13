@@ -2,7 +2,7 @@
 #define SESSION_H
 
 
-typedef enum {MET, SUBDELTA, DELTA, THETA,NON} sessionNumType;
+typedef enum {NON,MET, SUBDELTA, DELTA, THETA} sessionNumType;
 class Session {
 
     public:
