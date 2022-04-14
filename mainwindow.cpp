@@ -91,15 +91,13 @@ void MainWindow::powerOff(){
     deviceOn = false;
     leftEarConnected = false;
     rightEarConnected = false;
-    currentGroup = NULL;
-    currentSession = NULL;
     blinkTimer->stop();
     connectionTimer->stop();
     blinkCount = 0;
     connectionCount = 0;
     hideBattery();
     hideLabels();
-    hideSessionLabels();
+    hideGroupAndSessionLabels();
 
     if(session != NULL){
         if(session->getDuration() == 1){
@@ -115,8 +113,10 @@ void MainWindow::powerOff(){
         type = NON;
         sessionTimerCount = 0;
         session->setDuration(0);
-        session->setIntensity(0);
-        session->setType(NON);
+        session->setIntensity(1);
+        session->setType(type);
+        currentGroup = NULL;
+        currentSession = NULL;
     }
 
 }
@@ -126,13 +126,14 @@ void MainWindow::powerOn(){
     deviceOn = true;
     operation = 1;
     ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/Power.svg)");
+    ui->historyButton->setText("HISTORY");
     displayBattery();
     displayLabels();
 }
 
 
 
-void MainWindow::displaySessionLabel(QLabel* label){
+void MainWindow::displaySessionGroup(QLabel* label){
 
     if(label == ui->twentyMinsLabel){
         ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSession.svg)");
@@ -147,7 +148,7 @@ void MainWindow::displaySessionLabel(QLabel* label){
     }
 }
 
-// void mainwindow::displaySessionLabels(){
+// void mainwindow::displaySessionGroupLabels(){
 
 //     ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSession.svg)");
 //     ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSession.svg)");
@@ -160,7 +161,7 @@ void MainWindow::displaySessionLabel(QLabel* label){
 //     ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
 // }
 
- void MainWindow:: hideSessionLabels(){
+ void MainWindow:: hideGroupAndSessionLabels(){
 
      ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
      ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSessionOff.svg)");
@@ -180,41 +181,37 @@ void MainWindow::displaySessionLabel(QLabel* label){
 // battery for 45 min session -> at least 2 battery bars -> 25 percent
 
 
-void MainWindow::lightUpGroups(){
+void MainWindow::displaySession(){
     if(!deviceOn){return;}
 
     if(currentSession == NULL){
         currentSession = ui->metLabel;
-        sessionOff();
+        hideSessionLabels();
         ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
     }
 
     else if(currentSession == ui->metLabel){
-        currentSession = ui->subDeltaLabel;
-        sessionOff();
-        ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaS.svg)");
+        hideSessionLabels();
+        ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
 
     }
 
     else if(currentSession == ui->subDeltaLabel){
-        currentSession = ui->deltaLabel;
-        sessionOff();
-        ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/Delta.svg)");
+        hideSessionLabels();
+        ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaS.svg)");
     }
 
     else if(currentSession == ui->deltaLabel){
-        currentSession = ui->thetaLabel;
-        sessionOff();
-        ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
+        hideSessionLabels();
+        ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/Delta.svg)");
     }
     else if(currentSession == ui->thetaLabel){
-        currentSession = ui->metLabel;
-        sessionOff();
-        ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
+        hideSessionLabels();
+        ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
     }
 
 }
-void MainWindow::sessionOff()
+void MainWindow::hideSessionLabels()
 {
     ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/ThetaOff.svg)");
     ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaOff.svg)");
@@ -230,14 +227,16 @@ void MainWindow::navigateSessionGroups(){
 
         if(currentGroup == NULL){
             currentGroup = ui->twentyMinsLabel;
-            displaySessionLabel(currentGroup);
+//            qDebug() << "current group = twenty mins";
+            displaySessionGroup(currentGroup);
             return;
         }
 
         else if(currentGroup == ui->customSessionLabel){
             ui->customSessionLabel->setStyleSheet("border-image: url(:/images/icons/CustomSessionOff.svg)");
             currentGroup = ui->twentyMinsLabel;
-            displaySessionLabel(currentGroup);
+//            qDebug() << "current group = twenty mins";
+            displaySessionGroup(currentGroup);
             return;
         }
     }
@@ -245,8 +244,9 @@ void MainWindow::navigateSessionGroups(){
     if (batteryLvl >= 25){
         if(currentGroup == ui->twentyMinsLabel){
             ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
+//            qDebug() << "current group = forty five mins";
             currentGroup = ui->fortyFiveMinsLabel;
-            displaySessionLabel(currentGroup);
+            displaySessionGroup(currentGroup);
             return;
         }
     }
@@ -255,20 +255,23 @@ void MainWindow::navigateSessionGroups(){
         if(currentGroup == ui->fortyFiveMinsLabel){
             ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSessionOff.svg)");
             currentGroup = ui->customSessionLabel;
-            displaySessionLabel(currentGroup);
+//            qDebug() << "current group = custom";
+            displaySessionGroup(currentGroup);
             return;
         }
 
         else if(currentGroup == ui->twentyMinsLabel){
              ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
              currentGroup = ui->customSessionLabel;
-             displaySessionLabel(currentGroup);
+             qDebug() << "current group = custom";
+             displaySessionGroup(currentGroup);
              return;
         }
 
         else if(currentGroup == NULL){
             currentGroup = ui->customSessionLabel;
-            displaySessionLabel(currentGroup);
+            qDebug() << "current group = custom";
+            displaySessionGroup(currentGroup);
             return;
         }
     }
@@ -609,7 +612,7 @@ void MainWindow::selectDownButtonAction(){
     {
         if(currentGroup != NULL){
             assignSession(previousSession());
-            lightUpGroups();
+            displaySession();
         }
 
     }
@@ -646,7 +649,7 @@ void MainWindow::selectUpButtonAction(){
     {
         if(currentGroup != NULL){
             assignSession(nextSession());
-            lightUpGroups();
+            displaySession();
         }
 
     }
@@ -690,21 +693,24 @@ void MainWindow::showIntensity(int inten)
 void MainWindow::assignSession(int num)
 {
     switch(num){
-    case 0:
-        currentSession = ui->thetaLabel;
-        break;
-    case 1:
+    case MET:
         currentSession = ui->metLabel;
+//        qDebug() << "current session = met";
         break;
-    case 2:
+    case SUBDELTA:
         currentSession = ui->subDeltaLabel;
+//        qDebug() << "current session = subdelta";
         break;
-    case 3:
+    case DELTA:
         currentSession = ui->deltaLabel;
+//        qDebug() << "current session = delta";
+        break;
+    case THETA:
+        currentSession = ui->thetaLabel;
+//        qDebug() << "current session = theta";
         break;
     default:
         currentSession = ui->metLabel;
-        break;
     }
 
 
@@ -721,7 +727,7 @@ void MainWindow::confirmSelection(){
 
 
     hideBattery();
-    blinkingNum = type+1;
+    blinkingNum = type;
     blinkTimer->start(300);
 }
 
