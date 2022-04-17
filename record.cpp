@@ -22,7 +22,7 @@ void Record::saveRecords(Session* s)
    return;
 }
 
-void Record::createRecord(Session* s)
+string Record::createRecord(Session* s)
 {
     string date = getCurrDate();
     string type = convertToString(s);
@@ -35,6 +35,7 @@ void Record::createRecord(Session* s)
 
 
     cout << temp << endl;
+    return temp;
 
 }
 

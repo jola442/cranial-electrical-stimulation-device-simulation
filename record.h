@@ -17,7 +17,7 @@ class Record {
     public:
     Record();
     void saveRecords(Session* s);
-    void createRecord(Session* s);
+    string createRecord(Session* s);
     string convertToString(Session* s);
     string getCurrDate();
     

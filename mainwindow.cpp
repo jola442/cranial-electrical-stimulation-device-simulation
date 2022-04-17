@@ -816,13 +816,14 @@ void MainWindow::saveSession(){
         }
 
         r->saveRecords(session);
-        r->createRecord(session);
+        // r->createRecord(session);
         int inten = session->getIntensity();
         QString date = QDateTime::currentDateTime().toString("ddd MMMM d yyyy");
         QListWidgetItem* sessionWidget = new QListWidgetItem();
         //Time recorded is in seconds, multiply by 60 to get a minutes representation
         QString dur = QDateTime::fromTime_t(session->getDuration()*60).toUTC().toString("hh:mm:ss");
-        sessionWidget->setText(QString("Date: %1\n Session Type: %2\n Duration: %3\n Intensity Level: %4").arg(date).arg(sessionString).arg(dur).arg(inten));
+        QString rec = QString::fromStdString(r->createRecord(session));
+        sessionWidget->setText(rec);
         ui->historyListWidget->addItem(sessionWidget);
 }
 
