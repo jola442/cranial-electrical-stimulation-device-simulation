@@ -33,7 +33,7 @@ string Record::createRecord(Session* s)
     string type = convertToString(s);
     string temp = "";
 
-    temp = temp +  " Date: " + date +
+    temp = temp +  " Date: " + date + "\n" +
     " Session: " + type + "\n" +
     " Intensity: " + to_string(s->getIntensity()) + "\n" +
     " Duration: " + dur + "\n";
