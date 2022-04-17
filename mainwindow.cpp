@@ -814,6 +814,8 @@ void MainWindow::saveSession(){
             sessionString = "THETA";
         }
 
+        r.saveRecords(session);
+        r.createRecord(&session);
         int inten = session->getIntensity();
         QString date = QDateTime::currentDateTime().toString("ddd MMMM d yyyy");
         QListWidgetItem* sessionWidget = new QListWidgetItem();
