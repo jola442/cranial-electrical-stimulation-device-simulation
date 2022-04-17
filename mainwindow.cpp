@@ -794,37 +794,11 @@ void MainWindow::drainBattery(){
 
 //This function records a session
 void MainWindow::saveSession(){
-        QString sessionString;
-        if(currentSession == ui->metLabel){
-            session->setType(MET);
-            sessionString = "MET";
-        }
-
-        else if(currentSession == ui->subDeltaLabel){
-            session->setType(SUBDELTA);
-            sessionString = "SUBDELTA";
-        }
-
-        else if(currentSession == ui->deltaLabel){
-            session->setType(DELTA);
-            sessionString = "DELTA";
-        }
-
-        else{
-            session->setType(THETA);
-            sessionString = "THETA";
-        }
-
-        r->saveRecords(session);
-        // r->createRecord(session);
-        int inten = session->getIntensity();
-        QString date = QDateTime::currentDateTime().toString("ddd MMMM d yyyy");
-        QListWidgetItem* sessionWidget = new QListWidgetItem();
-        //Time recorded is in seconds, multiply by 60 to get a minutes representation
-        QString dur = QDateTime::fromTime_t(session->getDuration()*60).toUTC().toString("hh:mm:ss");
-        QString rec = QString::fromStdString(r->createRecord(session));
-        sessionWidget->setText(rec);
-        ui->historyListWidget->addItem(sessionWidget);
+        
+    r->saveRecords(session);
+    QString rec = QString::fromStdString(r->createRecord(session));
+    sessionWidget->setText(rec);
+    ui->historyListWidget->addItem(sessionWidget);
 }
 
 //this function changes to the next session when up button is used

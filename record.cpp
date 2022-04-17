@@ -7,6 +7,8 @@ Record::Record()
 
 void Record::saveRecords(Session* s)
 {
+  
+
     Session* temp = new Session();
     temp->setType(s->getType());
     temp->setIntensity(s->getIntensity());
@@ -24,6 +26,9 @@ void Record::saveRecords(Session* s)
 
 string Record::createRecord(Session* s)
 {
+    string dur = to_string(s->getDuration());
+    dur.resize(4);
+
     string date = getCurrDate();
     string type = convertToString(s);
     string temp = "";
@@ -31,7 +36,7 @@ string Record::createRecord(Session* s)
     temp = temp +  " Date: " + date +
     " Session: " + type + "\n" +
     " Intensity: " + to_string(s->getIntensity()) + "\n" +
-    " Duration: " + to_string(s->getDuration()) + "\n";
+    " Duration: " + dur + "\n";
 
 
     cout << temp << endl;
@@ -69,7 +74,7 @@ string Record:: convertToString(Session* s)
 string Record::getCurrDate()
 {
     time_t now = time(0);
-    string date_time = ctime(&now);
-
-   return date_time;
+    string dateAndTime = ctime(&now);
+    dateAndTime.resize(16);
+   return dateAndTime;
 }
