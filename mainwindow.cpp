@@ -795,6 +795,7 @@ void MainWindow::drainBattery(){
 //This function records a session
 void MainWindow::saveSession(){
         
+    QListWidgetItem* sessionWidget = new QListWidgetItem();
     r->saveRecords(session);
     QString rec = QString::fromStdString(r->createRecord(session));
     sessionWidget->setText(rec);
