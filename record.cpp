@@ -76,5 +76,5 @@ string Record::getCurrDate()
     time_t now = time(0);
     string dateAndTime = ctime(&now);
     dateAndTime.resize(16);
-   return dateAndTime;
+    return dateAndTime;
 }

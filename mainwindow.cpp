@@ -794,6 +794,22 @@ void MainWindow::drainBattery(){
 
 //This function records a session
 void MainWindow::saveSession(){
+
+    if(currentSession == ui->metLabel){
+        session->setType(MET);
+    }
+
+    else if(currentSession == ui->subDeltaLabel){
+        session->setType(SUBDELTA);
+    }
+
+    else if(currentSession == ui->deltaLabel){
+        session->setType(DELTA);
+    }
+
+    else{
+        session->setType(THETA);
+    }
         
     QListWidgetItem* sessionWidget = new QListWidgetItem();
     r->saveRecords(session);
