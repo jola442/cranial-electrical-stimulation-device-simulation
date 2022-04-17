@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <random>
 #include <iostream>
+#include <string>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,35 +15,37 @@ MainWindow::MainWindow(QWidget *parent)
     batteryLvl = 70;
     blinkTimer = new QTimer(this);
     connectionTimer = new QTimer(this);
+    sessionTimer = new QTimer(this);
     connectionStatus = 1;
     connectionCount = 0;
+    sessionTimerCount = 0;
     blinkCount = 0;
     blinkingNum = 0;
+    type = NON;
     leftEarConnected = false;
     rightEarConnected = false;
+    sessionInProgress = false;
     ui->historyListWidget->setVisible(false);
     currentGroup = NULL;
     currentSession = NULL;
-    connect(ui->upButton, &QPushButton::released, this, &MainWindow::navigateUpHistory);
-    connect(ui->downButton, &QPushButton::released, this, &MainWindow::navigateDownHistory);
+    session = new Session();
+    connect(ui->tickButton, &QPushButton::released, this, &MainWindow::confirmSelection);
+    connect(ui->upButton, &QPushButton::released, this, &MainWindow::selectUpButtonAction);
+    connect(ui->downButton, &QPushButton::released, this, &MainWindow::selectDownButtonAction);
     connect(blinkTimer, &QTimer::timeout, this, &MainWindow::blinkNumber);
     connect(connectionTimer, &QTimer::timeout, this, &MainWindow::displayConnectionStatus);
+    connect(sessionTimer, &QTimer::timeout, this, &MainWindow::updateSessionTimerCount);
     connect(ui->powerButton, &QPushButton::pressed, this, &MainWindow::startPowerTimer);
     connect(ui->powerButton, &QPushButton::released, this, &MainWindow::selectPowerAction);
     connect(ui->leftEarButton, &QPushButton::released, this, &MainWindow::toggleLeftEarConnection);
     connect(ui->rightEarButton, &QPushButton::released, this, &MainWindow::toggleRightEarConnection);
-    connect(ui->connectionTestButton, &QPushButton::released, this, &MainWindow::testConnection);
     connect(ui->historyButton, &QPushButton::released, this, &MainWindow::displayHistory);
-    // populate therapies
-    // therapies[0] = new Therapy("MET", 0.5, 3.0);
-    // therapies[1] = new Therapy("DELTA", 2.5, 5.0);
-    // therapies[2] = new Therapy("THETA", 6.0, 8.0);
-    // therapies[3] = new Therapy("ALPHA", 9.0, 11.0);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete session;
 }
 
 //This function starts the timer that measures how long the powerButton is clicked for
@@ -57,7 +60,10 @@ void MainWindow::selectPowerAction(){
     }
 
     else{
-        navigateSessionGroups();
+        if(!sessionInProgress){
+            navigateSessionGroups();
+        }
+
     }
 }
 
@@ -65,27 +71,69 @@ void MainWindow::selectPowerAction(){
 void MainWindow::togglePower(){
     if(!deviceOn){
         if(batteryLvl > 0){
-            ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/Power.svg)");
-            deviceOn = true;
-            displayBattery();
-            displayLabels();
+            powerOn();
+            qDebug() << batteryLvl;
         }
     }
 
     else{
-        ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/PowerOff.svg)");
-        deviceOn = false;
-        leftEarConnected = false;
-        rightEarConnected = false;
-        hideBattery();
-        hideLabels();
-        hideSessionLabels();
+        powerOff();
     }
 
 
 }
 
-void MainWindow::displaySessionLabel(QLabel* label){
+//This function resets the state of the device. It is called when the device is turned off.
+void MainWindow::powerOff(){
+    ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/PowerOff.svg)");
+    ui->historyListWidget->setVisible(false);
+    sessionInProgress = false;
+    deviceOn = false;
+    leftEarConnected = false;
+    rightEarConnected = false;
+    blinkTimer->stop();
+    connectionTimer->stop();
+    blinkCount = 0;
+    connectionCount = 0;
+    hideBattery();
+    hideLabels();
+    hideGroupAndSessionLabels();
+
+    if(session != NULL){
+        if(session->getDuration() == 1){
+            session->setDuration(sessionTimerCount);
+        }
+
+        //for 20 and 45 minute sessions, the battery is drained at once
+        else{
+            drainBattery();
+        }
+
+        saveSession();
+        type = NON;
+        sessionTimerCount = 0;
+        session->setDuration(0);
+        session->setIntensity(1);
+        session->setType(type);
+        currentGroup = NULL;
+        currentSession = NULL;
+    }
+
+}
+
+//This function is called when the device is turned on
+void MainWindow::powerOn(){
+    deviceOn = true;
+    operation = 1;
+    ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/Power.svg)");
+    ui->historyButton->setText("HISTORY");
+    displayBattery();
+    displayLabels();
+}
+
+
+
+void MainWindow::displaySessionGroup(QLabel* label){
 
     if(label == ui->twentyMinsLabel){
         ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSession.svg)");
@@ -100,7 +148,7 @@ void MainWindow::displaySessionLabel(QLabel* label){
     }
 }
 
-// void mainwindow::displaySessionLabels(){
+// void mainwindow::displaySessionGroupLabels(){
 
 //     ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSession.svg)");
 //     ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSession.svg)");
@@ -113,7 +161,7 @@ void MainWindow::displaySessionLabel(QLabel* label){
 //     ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
 // }
 
- void MainWindow:: hideSessionLabels(){
+ void MainWindow:: hideGroupAndSessionLabels(){
 
      ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
      ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSessionOff.svg)");
@@ -129,46 +177,41 @@ void MainWindow::displaySessionLabel(QLabel* label){
  }
 
 
-
 // battery for 20 min session -> at least 1 battery bar -> 12.5 percent
 // battery for 45 min session -> at least 2 battery bars -> 25 percent
 
 
-void MainWindow::lightUpGroups(){
+void MainWindow::displaySession(){
     if(!deviceOn){return;}
 
     if(currentSession == NULL){
         currentSession = ui->metLabel;
-        sessionOff();
+        hideSessionLabels();
         ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
     }
 
     else if(currentSession == ui->metLabel){
-        currentSession = ui->subDeltaLabel;
-        sessionOff();
-        ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaS.svg)");
+        hideSessionLabels();
+        ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
 
     }
 
     else if(currentSession == ui->subDeltaLabel){
-        currentSession = ui->deltaLabel;
-        sessionOff();
-        ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/Delta.svg)");
+        hideSessionLabels();
+        ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaS.svg)");
     }
 
     else if(currentSession == ui->deltaLabel){
-        currentSession = ui->thetaLabel;
-        sessionOff();
-        ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
+        hideSessionLabels();
+        ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/Delta.svg)");
     }
     else if(currentSession == ui->thetaLabel){
-        currentSession = ui->metLabel;
-        sessionOff();
-        ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
+        hideSessionLabels();
+        ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
     }
-    
+
 }
-void MainWindow::sessionOff()
+void MainWindow::hideSessionLabels()
 {
     ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/ThetaOff.svg)");
     ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaOff.svg)");
@@ -184,14 +227,16 @@ void MainWindow::navigateSessionGroups(){
 
         if(currentGroup == NULL){
             currentGroup = ui->twentyMinsLabel;
-            displaySessionLabel(currentGroup);
+//            qDebug() << "current group = twenty mins";
+            displaySessionGroup(currentGroup);
             return;
         }
 
         else if(currentGroup == ui->customSessionLabel){
             ui->customSessionLabel->setStyleSheet("border-image: url(:/images/icons/CustomSessionOff.svg)");
             currentGroup = ui->twentyMinsLabel;
-            displaySessionLabel(currentGroup);
+//            qDebug() << "current group = twenty mins";
+            displaySessionGroup(currentGroup);
             return;
         }
     }
@@ -199,8 +244,9 @@ void MainWindow::navigateSessionGroups(){
     if (batteryLvl >= 25){
         if(currentGroup == ui->twentyMinsLabel){
             ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
+//            qDebug() << "current group = forty five mins";
             currentGroup = ui->fortyFiveMinsLabel;
-            displaySessionLabel(currentGroup);
+            displaySessionGroup(currentGroup);
             return;
         }
     }
@@ -209,24 +255,27 @@ void MainWindow::navigateSessionGroups(){
         if(currentGroup == ui->fortyFiveMinsLabel){
             ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSessionOff.svg)");
             currentGroup = ui->customSessionLabel;
-            displaySessionLabel(currentGroup);
+//            qDebug() << "current group = custom";
+            displaySessionGroup(currentGroup);
             return;
         }
 
         else if(currentGroup == ui->twentyMinsLabel){
              ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
              currentGroup = ui->customSessionLabel;
-             displaySessionLabel(currentGroup);
+             qDebug() << "current group = custom";
+             displaySessionGroup(currentGroup);
              return;
         }
 
         else if(currentGroup == NULL){
             currentGroup = ui->customSessionLabel;
-            displaySessionLabel(currentGroup);
+            qDebug() << "current group = custom";
+            displaySessionGroup(currentGroup);
             return;
         }
     }
- 
+
 }
 
 //This function highlights parts of the number graph depending on the battery level of the device
@@ -322,7 +371,12 @@ void MainWindow::hideLabels(){
 }
 
 //This function causes the label corresponding to blinkingNum to blink
+//If the user has chosen a session group and number, this function calls testConnection()
 void MainWindow::blinkNumber(){
+    if(blinkingNum == 0){
+        return;
+    }
+
     QString blinkingStyleSheet = "";
     QString normalStyleSheet = "";
     QLabel* label = NULL;
@@ -383,6 +437,11 @@ void MainWindow::blinkNumber(){
     else{
         blinkTimer->stop();
         blinkCount = 0;
+
+        if(currentGroup != NULL && currentSession != NULL){
+            hideBattery();
+            testConnection();
+        }
     }
 }
 
@@ -432,9 +491,17 @@ void MainWindow::displayConnectionStatus(){
         connectionTimer->stop();
         connectionCount = 0;
 
-        //After the connection status is displayed, grey out all numbers and display the battery again
+        //After the connection status is displayed, grey out all number
         hideBattery();
-        displayBattery();
+
+        //If there is no connection, the session will not start
+        if(connectionStatus == 1){
+            sessionInProgress = false;
+        }
+
+        else{
+            startSession();
+        }
     }
 
     else{
@@ -490,37 +557,38 @@ void MainWindow::testConnection(){
 //This function displays the history of treatments and changes the text of the historyButton
 //from "HISTORY" to "HOME" and vice versa when appropriate
 void MainWindow::displayHistory(){
-    if(!ui->historyListWidget->isVisible()){
+    if(!deviceOn){
+        return;
+    }
+
+    if(sessionInProgress){
+        operation = 2;
+        return;
+    }
+
+    else if(ui->historyListWidget->isVisible()){
+        ui->historyButton->setText("HISTORY");
+        ui->historyListWidget->setVisible(false);
+        operation=1;
+
+    }
+
+    else{
         ui->historyButton->setText("HOME");
         ui->historyListWidget->setVisible(true);
         operation = 3;
     }
 
-    else{
-        ui->historyButton->setText("HISTORY");
-        ui->historyListWidget->setVisible(false);
-        operation=1;
-    }
-
-
-    for(int i = 0; i < 5; ++i){
-        QListWidgetItem* testWidgetItem = new QListWidgetItem();
-        testWidgetItem->setText(QString("Date: 08/26/200%1\n Session Type: MET\n Duration: 30:00\n Intensity Level: 8").arg(i));
-        ui->historyListWidget->addItem(testWidgetItem);
-    }
 
 }
 
-//This function moves the current history list selection one down
+//This function determines what functionality downButton will have
+void MainWindow::selectDownButtonAction(){
 
-//they are still working when the oasis is powered off, we need to correct that
-//
-//
-//
-//
-//
-//
-void MainWindow::navigateDownHistory(){
+    if(!deviceOn){
+        return;
+    }
+
     if(operation ==3 ) //navigate history
     {
 
@@ -536,19 +604,25 @@ void MainWindow::navigateDownHistory(){
 
     else if (operation ==2) //navigate intensity
     {
-        int temp = session.decreaseIntensity();
+        int temp = session->decreaseIntensity();
         showIntensity(temp);
     }
 
     else //navigate sessions
     {
-        assignSession(session.previousSession());
-        lightUpGroups();
+        if(currentGroup != NULL){
+            assignSession(previousSession());
+            displaySession();
+        }
+
     }
 }
 
-//This function moves the current history list selection one up
-void MainWindow::navigateUpHistory(){
+//This function determines what functionality upButton will have
+void MainWindow::selectUpButtonAction(){
+    if(!deviceOn){
+        return;
+    }
 
 
     if(operation ==3 ) //for navigating history
@@ -566,15 +640,18 @@ void MainWindow::navigateUpHistory(){
 
     else if (operation ==2) //in case for intensity
     {
-        int temp = session.increaseIntensity();
+        int temp = session->increaseIntensity();
         showIntensity(temp);
 
     }
 
     else //to naviagte sessions
     {
-        assignSession(session.nextSession());
-        lightUpGroups();
+        if(currentGroup != NULL){
+            assignSession(nextSession());
+            displaySession();
+        }
+
     }
 }
 
@@ -616,22 +693,167 @@ void MainWindow::showIntensity(int inten)
 void MainWindow::assignSession(int num)
 {
     switch(num){
-    case 0:
-        currentSession = ui->thetaLabel;
-        break;
-    case 1:
+    case MET:
         currentSession = ui->metLabel;
+//        qDebug() << "current session = met";
         break;
-    case 2:
+    case SUBDELTA:
         currentSession = ui->subDeltaLabel;
+//        qDebug() << "current session = subdelta";
         break;
-    case 3:
+    case DELTA:
         currentSession = ui->deltaLabel;
+//        qDebug() << "current session = delta";
+        break;
+    case THETA:
+        currentSession = ui->thetaLabel;
+//        qDebug() << "current session = theta";
         break;
     default:
         currentSession = ui->metLabel;
-        break;
     }
 
 
+}
+
+//This function blinks the current session number
+void MainWindow::confirmSelection(){
+    if(currentSession == NULL){
+        return;
+    }
+
+    displayBattery();
+    displayLabels();
+
+
+    hideBattery();
+    blinkingNum = type;
+    blinkTimer->start(300);
+}
+
+//This function initializes a session based on the user's choices and starts timers for the session
+void MainWindow::startSession(){
+    sessionInProgress = true;
+    operation = 2;
+
+    if(currentGroup == ui->twentyMinsLabel){
+        session->setDuration(20);
+    }
+
+    else if(currentGroup == ui->fortyFiveMinsLabel){
+        session->setDuration(45);
+    }
+
+    //Set the custom session's duration to 1 so it can be drained every second
+    else{
+        session->setDuration(1);
+    }
+    sessionTimer->start(1000);
+}
+
+
+//This function is called by the sessionTimer every second. It counts how long the session has lasted and it determines whether to turn off device or leave it on.
+void MainWindow::updateSessionTimerCount(){
+    if(batteryLvl <= 1){
+        sessionTimer->stop();
+        powerOff();
+    }
+
+    ++sessionTimerCount;
+    if(session->getDuration() == 20 || session->getDuration() == 45){
+        if(sessionTimerCount == session->getDuration()){
+            sessionTimer->stop();
+            powerOff();
+        }
+    }
+
+    else{
+        drainBattery();
+    }
+
+
+}
+
+//This function depletes the device's battery according to the connection strength, duration and intensity of the active session
+void MainWindow::drainBattery(){
+    batteryLvl -= (BATTERY_DRAIN * connectionStatus * session->getIntensity() * session->getDuration());
+}
+
+//This function records a session
+void MainWindow::saveSession(){
+        QString sessionString;
+        if(currentSession == ui->metLabel){
+            session->setType(MET);
+            sessionString = "MET";
+        }
+
+        else if(currentSession == ui->subDeltaLabel){
+            session->setType(SUBDELTA);
+            sessionString = "SUBDELTA";
+        }
+
+        else if(currentSession == ui->deltaLabel){
+            session->setType(DELTA);
+            sessionString = "DELTA";
+        }
+
+        else{
+            session->setType(THETA);
+            sessionString = "THETA";
+        }
+
+        int inten = session->getIntensity();
+        QString date = QDateTime::currentDateTime().toString("ddd MMMM d yyyy");
+        QListWidgetItem* sessionWidget = new QListWidgetItem();
+        //Time recorded is in seconds, multiply by 60 to get a minutes representation
+        QString dur = QDateTime::fromTime_t(session->getDuration()*60).toUTC().toString("hh:mm:ss");
+        sessionWidget->setText(QString("Date: %1\n Session Type: %2\n Duration: %3\n Intensity Level: %4").arg(date).arg(sessionString).arg(dur).arg(inten));
+        ui->historyListWidget->addItem(sessionWidget);
+}
+
+int MainWindow::nextSession(){
+    if(type == MET)
+    {
+        type = SUBDELTA;
+    }
+
+    else if(type == SUBDELTA)
+    {
+        type = DELTA;
+    }
+
+    else if(type == DELTA)
+    {
+        type = THETA;
+    }
+    else
+    {
+        type = MET;
+    }
+    //cout<<type<<endl;
+    return type;
+}
+
+int MainWindow::previousSession(){
+    if(type == MET)
+    {
+        type = THETA;
+    }
+
+    else if(type == THETA)
+    {
+        type = DELTA;
+    }
+
+    else if(type == DELTA)
+    {
+        type = SUBDELTA;
+    }
+    else
+    {
+        type = MET;
+    }
+
+    //cout<<type<<endl;
+    return type;
 }

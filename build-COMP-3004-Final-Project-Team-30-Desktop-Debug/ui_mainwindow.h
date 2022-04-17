@@ -62,7 +62,6 @@ public:
     QLabel *powerLabel;
     QPushButton *leftEarButton;
     QPushButton *rightEarButton;
-    QPushButton *connectionTestButton;
     QPushButton *historyButton;
     QListWidget *historyListWidget;
     QMenuBar *menubar;
@@ -94,11 +93,13 @@ public:
         upButton->setGeometry(QRect(410, 330, 61, 51));
         upButton->setStyleSheet(QString::fromUtf8("border-image:url(:/images/buttons/upButton.svg)\n"
 ""));
+        upButton->setAutoRepeat(true);
         downButton = new QPushButton(centralwidget);
         downButton->setObjectName(QString::fromUtf8("downButton"));
         downButton->setGeometry(QRect(410, 400, 61, 51));
         downButton->setStyleSheet(QString::fromUtf8("border-image:url(:/images/buttons/downButton.svg)\n"
 ""));
+        downButton->setAutoRepeat(true);
         tickButton = new QPushButton(centralwidget);
         tickButton->setObjectName(QString::fromUtf8("tickButton"));
         tickButton->setGeometry(QRect(150, 400, 61, 51));
@@ -260,9 +261,6 @@ public:
         rightEarButton->setStyleSheet(QString::fromUtf8("border-image:url(:/images/icons/RightOff.svg)\n"
 "\n"
 ""));
-        connectionTestButton = new QPushButton(centralwidget);
-        connectionTestButton->setObjectName(QString::fromUtf8("connectionTestButton"));
-        connectionTestButton->setGeometry(QRect(20, 10, 131, 25));
         historyButton = new QPushButton(centralwidget);
         historyButton->setObjectName(QString::fromUtf8("historyButton"));
         historyButton->setGeometry(QRect(450, 160, 91, 31));
@@ -272,9 +270,9 @@ public:
         historyListWidget = new QListWidget(centralwidget);
         historyListWidget->setObjectName(QString::fromUtf8("historyListWidget"));
         historyListWidget->setGeometry(QRect(220, 240, 181, 201));
-        historyListWidget->setStyleSheet(QString::fromUtf8("background-color: rgb(50, 50 , 50);\n"
-"color: rgb(200, 200, 200);\n"
-"selection-background-color: rgb(150, 150, 0)"));
+        historyListWidget->setStyleSheet(QString::fromUtf8("background-color: rgb(50, 50, 50);\n"
+"selection-background-color: rgb(150, 150, 0);\n"
+"color: rgb(200,200,200);"));
         historyListWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         historyListWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         historyListWidget->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
@@ -329,7 +327,6 @@ public:
         powerLabel->setText(QString());
         leftEarButton->setText(QString());
         rightEarButton->setText(QString());
-        connectionTestButton->setText(QApplication::translate("MainWindow", "connection test", nullptr));
         historyButton->setText(QApplication::translate("MainWindow", "HISTORY", nullptr));
     } // retranslateUi
 
