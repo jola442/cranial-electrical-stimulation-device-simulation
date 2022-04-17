@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.11.0, 2022-04-11T16:00:23. -->
+<!-- Written by QtCreator 4.11.0, 2022-04-17T15:16:21. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -285,8 +285,9 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/student/COMP-3004-Final-Project-Team-30/COMP-3004-Final-Project-Team-30.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/student/COMP-3004-Final-Project-Team-30/COMP-3004-Final-Project-Team-30.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">COMP-3004-Final-Project-Team-302</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/student/Desktop/COMP-3004/COMP-3004-Final-Project-Team-30/COMP-3004-Final-Project-Team-30.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/student/Desktop/COMP-3004/COMP-3004-Final-Project-Team-30/COMP-3004-Final-Project-Team-30.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>

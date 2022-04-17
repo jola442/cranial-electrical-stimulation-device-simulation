@@ -99,7 +99,7 @@ void MainWindow::powerOff(){
     hideLabels();
     hideGroupAndSessionLabels();
 
-    if(session != NULL){
+    if(session->getDuration() != 0){
         if(session->getDuration() == 1){
             session->setDuration(sessionTimerCount);
         }
