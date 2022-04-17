@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     currentGroup = NULL;
     currentSession = NULL;
     session = new Session();
+    r = new Record();
     connect(ui->tickButton, &QPushButton::released, this, &MainWindow::confirmSelection);
     connect(ui->upButton, &QPushButton::released, this, &MainWindow::selectUpButtonAction);
     connect(ui->downButton, &QPushButton::released, this, &MainWindow::selectDownButtonAction);
@@ -814,8 +815,8 @@ void MainWindow::saveSession(){
             sessionString = "THETA";
         }
 
-        r.saveRecords(session);
-        r.createRecord(&session);
+        r->saveRecords(session);
+        r->createRecord(session);
         int inten = session->getIntensity();
         QString date = QDateTime::currentDateTime().toString("ddd MMMM d yyyy");
         QListWidgetItem* sessionWidget = new QListWidgetItem();

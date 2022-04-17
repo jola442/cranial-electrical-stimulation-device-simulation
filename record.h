@@ -10,22 +10,22 @@
 
 using namespace std;
 
-#DEFINE MAX_SESSIONS 8
+#define MAX_SESSIONS 8
 
 class Record {
 
     public:
     Record();
-    void saveRecords(Session s);
+    void saveRecords(Session* s);
     void createRecord(Session* s);
-    String convertToString(Session* s);
-    String getCurrDate();
+    string convertToString(Session* s);
+    string getCurrDate();
     
 
 
 
     private:
-    Session sessions[MAX_SESSIONS];
+    Session* sessions[MAX_SESSIONS];
     int numSessions;
 
 

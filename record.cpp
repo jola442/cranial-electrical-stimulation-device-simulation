@@ -5,11 +5,16 @@ Record::Record()
     numSessions = 0;
 }
 
-void Record::saveRecords(Session s)
+void Record::saveRecords(Session* s)
 {
+    Session* temp = new Session();
+    temp->setType(s->getType());
+    temp->setIntensity(s->getIntensity());
+    temp->setDuration(s->getDuration());
+
     if(numSessions < MAX_SESSIONS)
     {
-        sessions[numSessions] = s;
+        sessions[numSessions] = temp;
         numSessions++;
         return;
     }
@@ -19,20 +24,21 @@ void Record::saveRecords(Session s)
 
 void Record::createRecord(Session* s)
 {
-    String date = getCurrDate();
-    String type = convertToString(s.getType());
-    String temp = "";
+    string date = getCurrDate();
+    string type = convertToString(s);
+    string temp = "";
 
-    temp = temp +  "Date: " + date + "\n"+
-    "Session: " + type + "\n" +
-    " Intensity: " + s.getIntensity() + "\n" +
-    " Duration: " + s.getDuration() + "\n";
+    temp = temp +  " Date: " + date +
+    " Session: " + type + "\n" +
+    " Intensity: " + to_string(s->getIntensity()) + "\n" +
+    " Duration: " + to_string(s->getDuration()) + "\n";
+
 
     cout << temp << endl;
 
 }
 
-String Record:: convertToString(Session* s)
+string Record:: convertToString(Session* s)
 {
     int num = s->getType();
    switch(num){
@@ -56,12 +62,13 @@ String Record:: convertToString(Session* s)
     default:
         return "NON";
         break;
+    }
 }
 
-String Record::getCurrDate()
+string Record::getCurrDate()
 {
     time_t now = time(0);
-    String date_time = ctime(&now);
+    string date_time = ctime(&now);
 
    return date_time;
 }

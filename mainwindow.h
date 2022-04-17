@@ -47,7 +47,7 @@ private:
     Session* session;           //the active session
     int operation; //1 is to select session, 2 is to select intensity, 3 is to go up and down in history
     sessionNumType type;        //the session type of the session the user wants to create
-    Record r;
+    Record *r;
     void displayBattery();
     void hideBattery();
     void displayLabels();
