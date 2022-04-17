@@ -48,12 +48,12 @@ MainWindow::~MainWindow()
     delete session;
 }
 
-//This function starts the timer that measures how long the powerButton is clicked for
+//This function starts the timer for the power button
 void MainWindow::startPowerTimer(){
     powerTimer.start();
 }
 
-//This function determines the action of the power button depending on how long it is clicked for
+//This function determines takes into account the time that the power button was pressed for and performs the appropriate step
 void MainWindow::selectPowerAction(){
     if(powerTimer.elapsed() > 500){
         togglePower();
@@ -67,7 +67,7 @@ void MainWindow::selectPowerAction(){
     }
 }
 
-//This function switches the device on and off
+//This function is responsible for turning the device on or off
 void MainWindow::togglePower(){
     if(!deviceOn){
         if(batteryLvl > 0){
@@ -83,7 +83,10 @@ void MainWindow::togglePower(){
 
 }
 
-//This function resets the state of the device. It is called when the device is turned off.
+//This function performs all the required steps to achieve the state when the device is turned off
+//disabling buttons
+//changing ui
+//resetting variables and timers
 void MainWindow::powerOff(){
     ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/PowerOff.svg)");
     ui->historyListWidget->setVisible(false);
@@ -121,7 +124,11 @@ void MainWindow::powerOff(){
 
 }
 
-//This function is called when the device is turned on
+
+//This function performs all the required steps to achieve the state when the device is turned on
+//enabling buttons
+//changing ui
+//setting variables and timers
 void MainWindow::powerOn(){
     deviceOn = true;
     operation = 1;
@@ -133,6 +140,9 @@ void MainWindow::powerOn(){
 
 
 
+//this function is responsible for highlighting the current selection of the group
+//changes ui
+//sets label
 void MainWindow::displaySessionGroup(QLabel* label){
 
     if(label == ui->twentyMinsLabel){
@@ -148,19 +158,10 @@ void MainWindow::displaySessionGroup(QLabel* label){
     }
 }
 
-// void mainwindow::displaySessionGroupLabels(){
 
-//     ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSession.svg)");
-//     ui->fortyFiveMinsLabel->setStyleSheet("border-image: url(:/images/icons/45minSession.svg)");
-//     ui->customSessionLabel->setStyleSheet("border-image: url(:/images/icons/CustomSession.svg)");
 
-//     ui->metLabel->setStyleSheet("border-image: url(:/images/icons/MET.svg)");
-//     ui->deltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaOn.svg)");
-//     ui->subDeltaLabel->setStyleSheet("border-image: url(:/images/icons/DeltaS.svg)");
-
-//     ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/Theta.svg)");
-// }
-
+//this function is hides all the groups and sessions,
+//sets an off image (meaning no group or session is selected)
  void MainWindow:: hideGroupAndSessionLabels(){
 
      ui->twentyMinsLabel->setStyleSheet("border-image: url(:/images/icons/20minSessionOff.svg)");
@@ -180,7 +181,7 @@ void MainWindow::displaySessionGroup(QLabel* label){
 // battery for 20 min session -> at least 1 battery bar -> 12.5 percent
 // battery for 45 min session -> at least 2 battery bars -> 25 percent
 
-
+ //this function displays the currently selected session.
 void MainWindow::displaySession(){
     if(!deviceOn){return;}
 
@@ -211,6 +212,9 @@ void MainWindow::displaySession(){
     }
 
 }
+
+
+//this functions hides all the session labels, meaning no session is currently selected.
 void MainWindow::hideSessionLabels()
 {
     ui->thetaLabel->setStyleSheet("border-image: url(:/images/icons/ThetaOff.svg)");
@@ -220,6 +224,9 @@ void MainWindow::hideSessionLabels()
 
 }
 
+
+//this function keeps a track of the group selection from the device.
+//also keeps battery level in check
 void MainWindow::navigateSessionGroups(){
     if(!deviceOn){return;}
 
@@ -332,10 +339,7 @@ void MainWindow::hideBattery(){
 
 //This function changes the colour of all icons from grey to their respective colours
 void MainWindow::displayLabels(){
-//    ui->rightEarButton->setStyleSheet("border-image: url(:/images/icons/Right.svg)");
-//    ui->leftEarButton->setStyleSheet("border-image: url(:/images/icons/Left.svg)");
-//    ui->leftConnectionLabel->setStyleSheet("border-image: url(:/images/icons/LeftConnection.svg)");
-//    ui->rightConnectionLabel->setStyleSheet("border-image: url(:/images/icons/RightConnection.svg)");
+
     ui->historyButton->setStyleSheet("color:rgb(0,255,0);"
                                      "border:none;"
                                      "font-size: 20px");
@@ -446,6 +450,7 @@ void MainWindow::blinkNumber(){
 }
 
 //This function switches the left ear icons on and off
+//the connection of the device depends on these
 void MainWindow::toggleLeftEarConnection(){
     if(!deviceOn){
         return;
@@ -583,6 +588,9 @@ void MainWindow::displayHistory(){
 }
 
 //This function determines what functionality downButton will have
+//history navigation
+//intensity
+//sessions
 void MainWindow::selectDownButtonAction(){
 
     if(!deviceOn){
@@ -619,6 +627,9 @@ void MainWindow::selectDownButtonAction(){
 }
 
 //This function determines what functionality upButton will have
+//history navigation
+//intensity
+//sessions
 void MainWindow::selectUpButtonAction(){
     if(!deviceOn){
         return;
@@ -655,7 +666,7 @@ void MainWindow::selectUpButtonAction(){
     }
 }
 
-
+//this functions is used to show the intensity to the user in between a session
 void MainWindow::showIntensity(int inten)
 {
     hideBattery();
@@ -690,6 +701,7 @@ void MainWindow::showIntensity(int inten)
 
 }
 
+//this functions assigns the sessions when the user is navigating through them
 void MainWindow::assignSession(int num)
 {
     switch(num){
@@ -811,6 +823,7 @@ void MainWindow::saveSession(){
         ui->historyListWidget->addItem(sessionWidget);
 }
 
+//this function changes to the next session when up button is used
 int MainWindow::nextSession(){
     if(type == MET)
     {
@@ -834,6 +847,7 @@ int MainWindow::nextSession(){
     return type;
 }
 
+//this function changes to the previous session when down button is used
 int MainWindow::previousSession(){
     if(type == MET)
     {

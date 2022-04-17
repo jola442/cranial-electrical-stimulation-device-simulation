@@ -9,8 +9,6 @@ class Session {
         Session();
         int increaseIntensity();
         int decreaseIntensity();
-//        int nextSession();
-//        int previousSession();
         void setType(sessionNumType newType);
         sessionNumType getType();
         float getDuration();
@@ -19,8 +17,8 @@ class Session {
         void setIntensity(int inten);
 
     private:
-        int intensity;
-        sessionNumType type;
-        float duration;
+        int intensity; //intensity variable
+        sessionNumType type; //type of session
+        float duration; //duration of the session
 };
 #endif

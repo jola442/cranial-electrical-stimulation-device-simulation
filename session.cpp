@@ -2,6 +2,8 @@
 #include <iostream>
 
 using namespace std;
+
+//session constructor
 Session::Session()
 {
     intensity = 1;
@@ -9,6 +11,7 @@ Session::Session()
     duration = 0;
 }
 
+//increases the intensity of the session
 int Session::increaseIntensity()
 {
     if(intensity<8)
@@ -19,7 +22,7 @@ int Session::increaseIntensity()
     return intensity;
 }
 
-
+//decreases the intensity of the session
 int Session::decreaseIntensity()
 {
     if(intensity>0)
@@ -32,55 +35,7 @@ int Session::decreaseIntensity()
 }
 
 
-//int Session::nextSession()
-//{
-//    if(type == MET)
-//    {
-//        type = SUBDELTA;
-//    }
-
-//    else if(type == SUBDELTA)
-//    {
-//        type = DELTA;
-//    }
-
-//    else if(type == DELTA)
-//    {
-//        type = THETA;
-//    }
-//    else
-//    {
-//        type = MET;
-//    }
-//    //cout<<type<<endl;
-//    return type;
-//}
-
-//int Session::previousSession()
-//{
-//    if(type == MET)
-//    {
-//        type = THETA;
-//    }
-
-//    else if(type == THETA)
-//    {
-//        type = DELTA;
-//    }
-
-//    else if(type == DELTA)
-//    {
-//        type = SUBDELTA;
-//    }
-//    else
-//    {
-//        type = MET;
-//    }
-
-//    //cout<<type<<endl;
-//    return type;
-//}
-
+//sets the type of session
 void Session::setType(sessionNumType newType){
     type = newType;
 }
