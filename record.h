@@ -10,6 +10,7 @@
 
 using namespace std;
 
+// Max sessions that can be stored is 8
 #define MAX_SESSIONS 8
 
 class Record {
@@ -20,14 +21,11 @@ class Record {
     string createRecord(Session* s);
     string convertToString(Session* s);
     string getCurrDate();
-    
-
 
 
     private:
     Session* sessions[MAX_SESSIONS];
     int numSessions;
-
 
 };
 

@@ -5,6 +5,7 @@ Record::Record()
     numSessions = 0;
 }
 
+// This function adds the recorded session to the history
 void Record::saveRecords(Session* s)
 {
   
@@ -25,6 +26,8 @@ void Record::saveRecords(Session* s)
    return;
 }
 
+
+// This function creates a string of the recorded session
 string Record::createRecord(Session* s)
 {
     string dur = to_string(s->getDuration());
@@ -45,6 +48,8 @@ string Record::createRecord(Session* s)
 
 }
 
+
+// This function converts the session type to a string
 string Record:: convertToString(Session* s)
 {
     int num = s->getType();
@@ -72,6 +77,8 @@ string Record:: convertToString(Session* s)
     }
 }
 
+
+// This function returns the current date
 string Record::getCurrDate()
 {
     time_t now = time(0);
