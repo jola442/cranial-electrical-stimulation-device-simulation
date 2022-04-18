@@ -89,6 +89,7 @@ void MainWindow::togglePower(){
 //changing ui
 //resetting variables and timers
 void MainWindow::powerOff(){
+    sessionTimer->stop();
     ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/PowerOff.svg)");
     ui->historyListWidget->setVisible(false);
     sessionInProgress = false;
@@ -816,6 +817,11 @@ void MainWindow::saveSession(){
     QString rec = QString::fromStdString(r->createRecord(session));
     sessionWidget->setText(rec);
     ui->historyListWidget->addItem(sessionWidget);
+
+    // if(deviceON && sessionTimer){
+    //     sessionTimer->stop();
+    // }
+
 }
 
 //this function changes to the next session when up button is used

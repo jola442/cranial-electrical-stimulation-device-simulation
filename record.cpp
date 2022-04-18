@@ -20,6 +20,7 @@ void Record::saveRecords(Session* s)
         numSessions++;
         return;
     }
+
    
    return;
 }
