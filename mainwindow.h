@@ -7,6 +7,7 @@
 #include <QtWidgets>
 
 #include "session.h"
+#include "record.h"
 #define BATTERY_DRAIN 0.026
 //1 bar of battery is required for a 20 min session
 //battery depletion is dependent on connection to skin, intensity and duration of the session
@@ -46,6 +47,7 @@ private:
     Session* session;           //the active session
     int operation; //1 is to select session, 2 is to select intensity, 3 is to go up and down in history
     sessionNumType type;        //the session type of the session the user wants to create
+    Record *r;
     void displayBattery();
     void hideBattery();
     void displayLabels();

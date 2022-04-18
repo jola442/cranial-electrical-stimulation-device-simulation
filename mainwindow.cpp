@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     currentGroup = NULL;
     currentSession = NULL;
     session = new Session();
+    r = new Record();
     connect(ui->tickButton, &QPushButton::released, this, &MainWindow::confirmSelection);
     connect(ui->upButton, &QPushButton::released, this, &MainWindow::selectUpButtonAction);
     connect(ui->downButton, &QPushButton::released, this, &MainWindow::selectDownButtonAction);
@@ -88,6 +89,7 @@ void MainWindow::togglePower(){
 //changing ui
 //resetting variables and timers
 void MainWindow::powerOff(){
+    sessionTimer->stop();
     ui->powerLabel->setStyleSheet("border-image: url(:/images/icons/PowerOff.svg)");
     ui->historyListWidget->setVisible(false);
     sessionInProgress = false;
@@ -793,34 +795,33 @@ void MainWindow::drainBattery(){
 
 //This function records a session
 void MainWindow::saveSession(){
-        QString sessionString;
-        if(currentSession == ui->metLabel){
-            session->setType(MET);
-            sessionString = "MET";
-        }
 
-        else if(currentSession == ui->subDeltaLabel){
-            session->setType(SUBDELTA);
-            sessionString = "SUBDELTA";
-        }
+    if(currentSession == ui->metLabel){
+        session->setType(MET);
+    }
 
-        else if(currentSession == ui->deltaLabel){
-            session->setType(DELTA);
-            sessionString = "DELTA";
-        }
+    else if(currentSession == ui->subDeltaLabel){
+        session->setType(SUBDELTA);
+    }
 
-        else{
-            session->setType(THETA);
-            sessionString = "THETA";
-        }
+    else if(currentSession == ui->deltaLabel){
+        session->setType(DELTA);
+    }
 
-        int inten = session->getIntensity();
-        QString date = QDateTime::currentDateTime().toString("ddd MMMM d yyyy");
-        QListWidgetItem* sessionWidget = new QListWidgetItem();
-        //Time recorded is in seconds, multiply by 60 to get a minutes representation
-        QString dur = QDateTime::fromTime_t(session->getDuration()*60).toUTC().toString("hh:mm:ss");
-        sessionWidget->setText(QString("Date: %1\n Session Type: %2\n Duration: %3\n Intensity Level: %4").arg(date).arg(sessionString).arg(dur).arg(inten));
-        ui->historyListWidget->addItem(sessionWidget);
+    else{
+        session->setType(THETA);
+    }
+        
+    QListWidgetItem* sessionWidget = new QListWidgetItem();
+    r->saveRecords(session);
+    QString rec = QString::fromStdString(r->createRecord(session));
+    sessionWidget->setText(rec);
+    ui->historyListWidget->addItem(sessionWidget);
+
+    // if(deviceON && sessionTimer){
+    //     sessionTimer->stop();
+    // }
+
 }
 
 //this function changes to the next session when up button is used
